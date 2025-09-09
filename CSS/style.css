@@ -1,0 +1,95 @@
+body{
+
+    background-color: #d9dcd6;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+header{
+
+    background: #242c50;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px 0px 10px 0px;
+    text-align: center;
+
+}
+
+
+header h1{
+
+    margin: 0px 0px 10px 0px;
+    font-size: 2em;
+    color: #d9dcd6;
+    text-align: center;
+}
+
+nav ul{
+
+    list-style: none;
+    padding: 0px;
+    margin: 0px 0px 5px 0px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+}
+
+nav ul i{
+
+    display: inline;
+
+}
+
+nav ul a{
+
+    color: #d9dcd6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    transition: text-decoration 0.2, color 0.2s;
+
+}
+
+nav ul a:hover{
+
+    text-decoration: underline;
+    color: #d9dcd6;
+    text-align: center;
+
+}
+
+main{
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.especialidades{
+
+    list-style-type: none;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+section{
+
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.servicios{
+
+    list-style-type: none;
+    text-align: center;
+
+}
+
+.consultas{
+
+    list-style-type: none;
+
+
+}
