@@ -59,11 +59,16 @@
     </header>
 
     <main>
-        <section>
-            <h2>Bienvenido al servicio web de Clínica Los Teros</h2>
+        <section class="portada">
+          <div class="portada-overlay"></div>
+          <div class="portada-texto mb-5">
+            <h1>Bienvenidos a Clínica Los Teros</h1>
+            <a href="#especialistas" class="btn-principal">Solicite un turno online</a>
+          </div>
         </section>
-        <section class="catalogo">
-            <p>Seleccione un especialista:</p>
+
+        <section class="catalogo" id="especialistas">
+            <h4 class="py-2">Seleccione un especialista:</h4>
             <div class="row g-4">
                 <div class="col-12 col-md-6 col-lg-4 d-flex">
                     <div class="card w-100">
@@ -71,7 +76,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Dr. Jose Pérez</h5>
                             <p class="card-text"> Médico Clínico</p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>
+                            <a href="#" class="btn-principal">Solicitar turno</a>
                         </div>
                     </div>
                 </div>
@@ -81,7 +86,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Dr. Juan López</h5>
                             <p class="card-text"> Cardiólogo</p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>                        
+                            <a href="#" class="btn-principal">Solicitar turno</a>                        
                         </div>
                     </div>
                 </div>
@@ -91,7 +96,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Dra. Josefina Pérez</h5>
                             <p class="card-text"> Pediatra </p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>
+                            <a href="#" class="btn-principal">Solicitar turno</a>
                         </div>
                     </div>
                 </div>
@@ -101,7 +106,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Dr. Pablo Ramírez</h5>
                             <p class="card-text"> Traumatólogo</p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>
+                            <a href="#" class="btn-principal">Solicitar turno</a>
                         </div>
                     </div>
                 </div>
@@ -111,7 +116,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Dr. Andrés Carls</h5>
                             <p class="card-text"> Nutricionista</p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>
+                            <a href="#" class="btn-principal">Solicitar turno</a>
                         </div>
                     </div>
                 </div>
@@ -121,7 +126,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Dr. Cesar Rodríguez</h5>
                             <p class="card-text"> Cirujano</p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>
+                            <a href="#" class="btn-principal">Solicitar turno</a>
                         </div>
                     </div>
                 </div>
@@ -131,7 +136,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Dr. Pedro Rodríguez</h5>
                             <p class="card-text"> Dermatólogo</p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>
+                            <a href="#" class="btn-principal">Solicitar turno</a>
                         </div>
                     </div>
                 </div>
@@ -141,7 +146,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Dra. Laura Juárez</h5>
                             <p class="card-text"> Nefrólofa</p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>
+                            <a href="#" class="btn-principal">Solicitar turno</a>
                         </div>
                     </div>
                 </div>
@@ -151,30 +156,67 @@
                         <div class="card-body">
                             <h5 class="card-title">Dr. Dario Martinez</h5>
                             <p class="card-text"> Psiquiatra</p>
-                            <a href="#" class="btn btn-primary">Solicitar turno</a>
+                            <a href="#" class="btn-principal">Solicitar turno</a>
                         </div>
                     </div>
                 </div>
-             
+        </section>
+
+        <section class="catalogo mb-4" id="especialidades">
+          <h4 class="mt-3">Todas nuestras especialidades:</h4>
+          <p>Consulte por un turno en los horarios de atención</p>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <ul class="list-unstyled">
+                <li>Cardiología</li>
+                <li>Dermatología</li>
+                <li>Ginecología</li>
+                <li>Pediatría</li>
+                <li>Oftalmología</li>
+                <li>Neurología</li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-4">
+              <ul class="list-unstyled">
+                <li>Traumatología</li>
+                <li>Urología</li>
+                <li>Endocrinología</li>
+                <li>Psiquiatría</li>
+                <li>Otorrinolaringología</li>
+                <li>Reumatología</li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-4">
+              <ul class="list-unstyled">
+                <li>Neumonología</li>
+                <li>Hematología</li>
+                <li>Gastroenterología</li>
+                <li>Nefrología</li>
+                <li>Oncología</li>
+                <li>Infectología</li>
+              </ul>
+            </div>
+          </div>
         </section>
 
 
     </main>
 
-    <footer class="big-light text-dark ot-5 pb-4">
+    <footer class="big-light text-light ot-5 pb-4">
       <div class="container text-center text-md-start">
         <div class="row text-center text-md-start">
 
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h5 class="text-uppercase mb-4 font-weight-bold text-primary">Horarios de atención</h5>  
+            <h5 class="footer-texto mb-4 font-weight-bold">HORARIOS DE ATENCIÓN</h5>  
             <hr class="mb-4">       
-            <p>Lunes a Viernes de 9:00 a 18:00</p>
-            <p>Sabados de 9:00 a 15:00</p>
+            <p>Consultorios: Lunes a viernes de 8:00 a 20:00 hs. Sábados de 9:00 a 12 hs.</p>
+            <p>Laboratorio: Lunes a viernes de 7:00 a 20:00 hs. Sábados de 7:30 a 12:00hs.</p>
+            <p>Guardia médica: 24 hs.</p>
 
           </div>
 
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h5 class="text-uppercase mb-4 font-weight-bold text-primary">Redes sociales</h5>
+            <h5 class="footer-texto mb-4 font-weight-bold">REDES SOCIALES</h5>
             <hr class="mb-4">
             <ul class="redes">
               <li><a href="https://www.facebook.com">Facebook</a></li>
@@ -184,13 +226,12 @@
           </div>
 
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h5 class="text-uppercase mb-4 font-weight-bold text-primary">Contacto</h5>
+            <h5 class="footer-texto mb-4 font-weight-bold">CONTACTO</h5>
             <hr class="mb-4">
-            <ul class="contacto">
-              <li>Clinica: +54 11 1234-5678</li>
-              <li>Central de turnos: 0800-123-4567</li>
-              <li>Mail: contacto@clinicalosteros.com</li>
-            </ul>
+              <p>Clinica: +54 11 1234-5678</p>
+              <p>Central de turnos: 0800-123-4567</p>
+              <p>Mail: contacto@clinicalosteros.com</p>
+              <p>Dirección: Calle Falsa 123, Entre Ríos, Argentina</p>
           </div>
             
           <hr class="mb-4">
