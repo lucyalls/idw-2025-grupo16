@@ -137,19 +137,6 @@ h2, h3, h4 {
   padding: 8px 16px;
 }
  }
-/*Tablets: entre 577 y 992px */
-@media (min-width: 577px) and (max-width: 992px) {
-  body {
-    background-color: #8ca4dd;
-  } 
-  h2, h3, h4 {
-    font-size: 1.5rem;
-  }
-  .btn-principal {
-    font-size: 18px;
-    padding: 10px 18px;
-  }
-}
 /*Computadoras: desde 933px en adelante */
 @media (min-width: 993px) and (max-width: 1200px) {
   body {
