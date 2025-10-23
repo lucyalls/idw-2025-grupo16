@@ -69,6 +69,7 @@ function altaMedicos(event) {
     limpiarFormulario();
     listarMedicos();
 }
+<<<<<<< HEAD
 
 function crearFilaMedico(m){
     const tr = document.createElement('tr');
@@ -135,3 +136,7 @@ formAltaMedico.addEventListener('submit', altaMedicos);
 document.addEventListener('DOMContentLoaded', function(){
     listarMedicos();
 });
+=======
+actualizarTabla();
+formAltaMedico.addEventListener('submit', altaMedicos);
+>>>>>>> 6b3d11472c324a466c97d1c013ff777e635855f7
