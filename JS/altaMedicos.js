@@ -7,131 +7,101 @@ const especialidadInput = document.getElementById('especialidad');
 const telefonoInput = document.getElementById('telefono');
 const diasAtencionInput = document.getElementById('dias-atencion');
 const obraSocialInput = document.getElementById('obra-social');
-const tablaMedicosBody = document.querySelector('#tabla-medicos tbody');
+const tablaMedicosBody = document.getElementById('tabla-medicos-body');
 
+let flagIndex = null;
 
-let idEditando = null; 
+function actualizarTabla() {
+    let medicos = JSON.parse(localStorage.getItem('medicos')) || [];
+    tablaMedicosBody.innerHTML = '';
+    medicos.forEach((medico, index) => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${medico.apellido}</td>
+            <td>${medico.nombre}</td>
+            <td>${medico.especialidad}</td>
+            <td>${medico.telefono}</td>
+            <td>${medico.diasAtencion}</td>
+            <td>${medico.obraSocial}</td>
+            <td>
+                <button class="editar-btn" data-index="${index}">Editar</button>
+                <button class="eliminar-btn" data-index="${index}">Eliminar</button>
+            </td>
+        `;
+        tablaMedicosBody.appendChild(fila);
+    });
+}
 
-function limpiarFormulario(){
-    formAltaMedico.reset();
-    idEditando = null;
-    const submitBtn = document.getElementById('submitBtn');
-    if(submitBtn) submitBtn.textContent = 'Registrar médico';
+tablaMedicosBody.addEventListener('click', function(event) {
+    if (event.target.classList.contains('editar-btn')) {
+        const index = Number(event.target.dataset.index);
+        editarMedico(index);
+    }
+    if (event.target.classList.contains('eliminar-btn')) {
+        const index = Number(event.target.dataset.index);
+        eliminarMedico(index);
+    }
+});
+
+function editarMedico(index) {
+    let medicos = JSON.parse(localStorage.getItem('medicos')) || [];
+    const medico = medicos[index];
+    if (!medico) return;
+    apellidoInput.value = medico.apellido;
+    nombreInput.value = medico.nombre;
+    especialidadInput.value = medico.especialidad;
+    telefonoInput.value = medico.telefono;
+    diasAtencionInput.value = medico.diasAtencion;
+    obraSocialInput.value = medico.obraSocial;
+    flagIndex = index;
+}
+
+function eliminarMedico(index) {
+    let medicos = JSON.parse(localStorage.getItem('medicos')) || [];
+    if (!confirm(`¿Estás seguro de que deseas eliminar a ${medicos[index].nombre} ${medicos[index].apellido}?`)) {
+        return;
+    }
+    medicos.splice(index, 1);
+    localStorage.setItem('medicos', JSON.stringify(medicos));
+    actualizarTabla();
+    flagIndex = null;
 }
 
 function altaMedicos(event) {
     event.preventDefault();
 
-    const apellido = apellidoInput.value.trim();
-    const nombre = nombreInput.value.trim();
-    const especialidad = especialidadInput.value.trim();
-    const telefono = telefonoInput.value.trim();
-    const diasAtencion = diasAtencionInput.value.trim();
-    const obraSocial = obraSocialInput.value.trim();
+    let apellido = apellidoInput.value.trim();
+    let nombre = nombreInput.value.trim();
+    let especialidad = especialidadInput.value.trim();
+    let telefono = telefonoInput.value.trim();
+    let diasAtencion = diasAtencionInput.value.trim();
+    let obraSocial = obraSocialInput.value.trim();
 
-    if (!nombre || !apellido || !especialidad) {
-        alert('Completar los campos obligatorios (nombre, apellido, especialidad)');
+    if (!nombre || !apellido || !especialidad || !telefono || !diasAtencion || !obraSocial) {
+        alert('Completar los campos obligatorios');
         return;
     }
 
-    const medicos = obtenerMedicos();
+    let medicos = JSON.parse(localStorage.getItem('medicos')) || [];
 
-    if(idEditando){
-        const idx = medicos.findIndex(m => String(m.id) === String(idEditando));
-        if(idx !== -1){
-            medicos[idx].apellido = apellido;
-            medicos[idx].nombre = nombre;
-            medicos[idx].especialidad = especialidad;
-            medicos[idx].telefono = telefono;
-            medicos[idx].diasAtencion = diasAtencion;
-            medicos[idx].obraSocial = obraSocial;
-            guardarMedicos(medicos);
-            alert('Médico modificado correctamente');
-            limpiarFormulario();
-            listarMedicos();
-            return;
-        }
+    if (flagIndex !== null) {
+        medicos[flagIndex] = { apellido, nombre, especialidad, telefono, diasAtencion, obraSocial };
+        alert(`El médico ${apellido} ${nombre} ha sido actualizado.`);
+        flagIndex = null;
+    } else {
+        medicos.push({ apellido, nombre, especialidad, telefono, diasAtencion, obraSocial });
+        alert(
+            `El médico ${apellido} ${nombre} ha sido dado de alta con la especialidad de ${especialidad}\n` +
+            `Teléfono: ${telefono}\n` +
+            `Obras sociales aceptadas: ${obraSocial}\n` +
+            `Días de atención: ${diasAtencion}`
+        );
     }
 
-    const nuevo = {
-        id: Date.now(),
-        apellido,
-        nombre,
-        especialidad,
-        telefono,
-        diasAtencion,
-        obraSocial
-    };
-
-    medicos.push(nuevo);
-    guardarMedicos(medicos);
-    alert(`El médico ${apellido} ${nombre} ha sido dado de alta.`);
-    limpiarFormulario();
-    listarMedicos();
+    localStorage.setItem('medicos', JSON.stringify(medicos));
+    formAltaMedico.reset();
+    actualizarTabla();
 }
 
-function crearFilaMedico(m){
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-        <td>${m.apellido} ${m.nombre}</td>
-        <td>${m.especialidad}</td>
-        <td>${m.telefono || '-'}</td>
-        <td>${m.obraSocial || '-'}</td>
-        <td>${m.diasAtencion || '-'}</td>
-        <td>
-          <button type="button" class="btn-ver" onclick="verMedico(${m.id})">Ver</button>
-          <button type="button" class="btn-editar" onclick="editarMedico(${m.id})">Editar</button>
-          <button type="button" class="btn-eliminar" onclick="eliminarMedico(${m.id})">Eliminar</button>
-        </td>
-    `;
-    return tr;
-}
-
-export function listarMedicos(){
-    if(!tablaMedicosBody) return;
-    const medicos = obtenerMedicos();
-    tablaMedicosBody.innerHTML = '';
-    if(medicos.length === 0){
-        tablaMedicosBody.innerHTML = '<tr><td colspan="6">No hay médicos registrados.</td></tr>';
-        return;
-    }
-    medicos.forEach(m => tablaMedicosBody.appendChild(crearFilaMedico(m)));
-}
-
-window.verMedico = function(id){
-    const medicos = obtenerMedicos();
-    const m = medicos.find(x => String(x.id) === String(id));
-    if(!m){ alert('Médico no encontrado'); return; }
-    const detalle = `Nombre: ${m.apellido} ${m.nombre}\nEspecialidad: ${m.especialidad}\nTeléfono: ${m.telefono || '-'}\nObras Sociales: ${m.obraSocial || '-'}\nDías de atención: ${m.diasAtencion || '-'}`;
-    alert(detalle);
-}
-
-window.editarMedico = function(id){
-    const medicos = obtenerMedicos();
-    const m = medicos.find(x => String(x.id) === String(id));
-    if(!m){ alert('Médico no encontrado'); return; }
-    apellidoInput.value = m.apellido || '';
-    nombreInput.value = m.nombre || '';
-    especialidadInput.value = m.especialidad || '';
-    telefonoInput.value = m.telefono || '';
-    diasAtencionInput.value = m.diasAtencion || '';
-    obraSocialInput.value = m.obraSocial || '';
-    idEditando = m.id;
-    const submitBtn = document.getElementById('submitBtn');
-    if(submitBtn) submitBtn.textContent = 'Guardar cambios';
-    formAltaMedico.scrollIntoView({behavior: 'smooth'});
-}
-
-window.eliminarMedico = function(id){
-    if(!confirm('¿Querés eliminar este médico?')) return;
-    let medicos = obtenerMedicos();
-    medicos = medicos.filter(m => String(m.id) !== String(id));
-    guardarMedicos(medicos);
-    listarMedicos();
-}
-
+actualizarTabla();
 formAltaMedico.addEventListener('submit', altaMedicos);
-
-document.addEventListener('DOMContentLoaded', function(){
-    listarMedicos();
-});
