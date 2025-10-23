@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Administración de Médicos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="custom-navbar navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-title" href="index.html">
+                    <h2>Clínica Los Teros</h2>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="institucional.html">Institucional</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contacto.html">Contacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="altaMedicos.html">Administración</a>
+                        </li>
+                    </ul>
+                    <a href="login.html" class="btn btn-principal">Ingresar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5">
+        <h1 class="texto-centro mb-5">Panel de Administración de Médicos</h1>
+
+        <section class="mb-5 p-4 border rounded">
+            <h2 class="mb-4">Registro de Nuevo Médico</h2>
+            <form id="altaMedicosForm">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="apellido" class="form-label">Apellido (*)</label>
+                        <input type="text" class="form-control" id="apellido" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre (*)</label>
+                        <input type="text" class="form-control" id="nombre" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="especialidad" class="form-label">Especialidad (*)</label>
+                        <input type="text" class="form-control" id="especialidad" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="tel" class="form-control" id="telefono">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="dias-atencion" class="form-label">Días de Atención</label>
+                        <input type="text" class="form-control" id="dias-atencion"
+                            placeholder="Ej: Lunes, Miércoles, Viernes">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="obra-social" class="form-label">Obra Social</label>
+                        <input type="text" class="form-control" id="obra-social"
+                            placeholder="Ej: Particular, Osde, Swiss Medical">
+                    </div>
+                    <div class="col-12 mt-4 text-center">
+                        <button type="submit" id="submitBtn" class="btn-principal">Registrar médico</button>
+                        <button type="button" onclick="limpiarFormulario()"
+                            class="btn btn-secondary ms-2">Cancelar/Nuevo</button>
+                    </div>
+                </div>
+                <p class="mt-3 text-muted">(*) Campos obligatorios</p>
+            </form>
+        </section>
+
+        <section>
+            <h2 class="mb-3">Médicos registrados:</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" id="tabla-medicos">
+                    <thead>
+                        <tr>
+                            <th>Nombre completo</th>
+                            <th>Especialidad</th>
+                            <th>Teléfono</th>
+                            <th>Obras sociales</th>
+                            <th>Días de atención</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">Cargando médicos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-light mt-5">
+        <div class="container text-center text-md-start">
+            <div class="row text-center text-md-start">
+
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="footer-texto mb-4 font-weight-bold">CLÍNICA LOS TEROS</h5>
+                    <hr class="mb-4">
+                    <p>La salud y el bienestar de nuestros pacientes es nuestra prioridad.</p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="footer-texto mb-4 font-weight-bold">HORARIOS</h5>
+                    <hr class="mb-4">
+                    <p>Consultorios: Lunes a viernes de 8:00 a 20:00 hs. Sábados de 9:00 a 12 hs.</p>
+                    <p>Laboratorio: Lunes a viernes de 7:00 a 20:00 hs. Sábados de 7:30 a 12:00hs.</p>
+                    <p>Guardia médica: 24 hs.</p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="footer-texto mb-4 font-weight-bold">REDES SOCIALES</h5>
+                    <hr class="mb-4">
+                    <ul class="redes">
+                        <li><a href="https://www.facebook.com">Facebook</a></li>
+                        <li><a href="https://www.instagram.com">Instagram</a></li>
+                        <li><a href="https://www.twitter.com">Twitter</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="footer-texto mb-4 font-weight-bold">CONTACTO</h5>
+                    <hr class="mb-4">
+                    <p>Clinica: +54 11 1234-5678</p>
+                    <p>Central de turnos: 0800-123-4567</p>
+                    <p>Mail: contacto@clinicalosteros.com</p>
+                    <p>Dirección: Calle Falsa 123, Entre Ríos, Argentina</p>
+                </div>
+
+                <hr class="mb-4">
+                <div class="text-center mb-2">
+                    <p>© 2025 Clínica Los Teros. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6C8Xz7vE2pW2fMv0nC1tP4P6J2G8D6D9Fq2ZpQx9o4u8V5b3S2K1L7A9Y0YxG3V"
+        crossorigin="anonymous"></script>
+
+    <script type="module" src="JS/altaMedicos.js"></script>
+
+</body>
+
+</html>
