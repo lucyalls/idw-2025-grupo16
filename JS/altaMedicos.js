@@ -10,26 +10,14 @@ const obraSocialInput = document.getElementById('obra-social');
 const tablaMedicosBody = document.getElementById('tabla-medicos-body');
 
 let flagIndex = null;
+let idEditando = null;
 
-function actualizarTabla() {
-    let medicos = JSON.parse(localStorage.getItem('medicos')) || [];
-    tablaMedicosBody.innerHTML = '';
-    medicos.forEach((medico, index) => {
-        const fila = document.createElement('tr');
-        fila.innerHTML = `
-            <td>${medico.apellido}</td>
-            <td>${medico.nombre}</td>
-            <td>${medico.especialidad}</td>
-            <td>${medico.telefono}</td>
-            <td>${medico.diasAtencion}</td>
-            <td>${medico.obraSocial}</td>
-            <td>
-                <button class="editar-btn" data-index="${index}">Editar</button>
-                <button class="eliminar-btn" data-index="${index}">Eliminar</button>
-            </td>
-        `;
-        tablaMedicosBody.appendChild(fila);
-    });
+function limpiarFormulario() {
+    formAltaMedico.reset();
+    idEditando = null;
+    flagIndex = null;
+    const submitBtn = document.getElementById('submitBtn');
+    if (submitBtn) submitBtn.textContent = 'Registrar médico';
 }
 
 tablaMedicosBody.addEventListener('click', function(event) {
@@ -43,26 +31,52 @@ tablaMedicosBody.addEventListener('click', function(event) {
     }
 });
 
+function crearFilaMedico(m){
+    const tr = document.createElement('tr');
+    const nombreCompleto = m.apellido ? `${m.apellido} ${m.nombre}` : m.nombre;
+    
+    tr.innerHTML = `
+        <td>${nombreCompleto || ''}</td>
+        <td>${m.especialidad || '-'}</td>
+        <td>${m.telefono || '-'}</td>
+        <td>${m.obraSocial || '-'}</td>
+        <td>${m.diasAtencion || '-'}</td>
+        <td>
+          <button type="button" class="btn-ver" onclick="verMedico(${m.id})">Ver</button>
+          <button type="button" class="btn-editar" onclick="editarMedico(${m.id})">Editar</button>
+          <button type="button" class="btn-eliminar" onclick="eliminarMedico(${m.id})">Eliminar</button>
+        </td>
+    `;
+    return tr;
+}
+
 function editarMedico(index) {
-    let medicos = JSON.parse(localStorage.getItem('medicos')) || [];
+    let medicos = obtenerMedicos(); 
     const medico = medicos[index];
     if (!medico) return;
-    apellidoInput.value = medico.apellido;
-    nombreInput.value = medico.nombre;
-    especialidadInput.value = medico.especialidad;
-    telefonoInput.value = medico.telefono;
-    diasAtencionInput.value = medico.diasAtencion;
-    obraSocialInput.value = medico.obraSocial;
-    flagIndex = index;
+    
+    apellidoInput.value = medico.apellido || '';
+    nombreInput.value = medico.nombre || '';
+    especialidadInput.value = medico.especialidad || '';
+    telefonoInput.value = medico.telefono || '';
+    diasAtencionInput.value = medico.diasAtencion || '';
+    obraSocialInput.value = medico.obraSocial || '';
+    
+    flagIndex = index; 
+    
+    if (medico.id) idEditando = medico.id; 
 }
 
 function eliminarMedico(index) {
-    let medicos = JSON.parse(localStorage.getItem('medicos')) || [];
+
+    let medicos = obtenerMedicos(); 
     if (!confirm(`¿Estás seguro de que deseas eliminar a ${medicos[index].nombre} ${medicos[index].apellido}?`)) {
         return;
     }
     medicos.splice(index, 1);
-    localStorage.setItem('medicos', JSON.stringify(medicos));
+    
+    guardarMedicos(medicos); 
+    
     actualizarTabla();
     flagIndex = null;
 }
@@ -82,54 +96,39 @@ function altaMedicos(event) {
         return;
     }
 
-    let medicos = JSON.parse(localStorage.getItem('medicos')) || [];
+    let medicos = obtenerMedicos(); 
+
+    const datosMedico = { apellido, nombre, especialidad, telefono, diasAtencion, obraSocial };
 
     if (flagIndex !== null) {
-        medicos[flagIndex] = { apellido, nombre, especialidad, telefono, diasAtencion, obraSocial };
+        medicos[flagIndex] = { ...medicos[flagIndex], ...datosMedico };
         alert(`El médico ${apellido} ${nombre} ha sido actualizado.`);
         flagIndex = null;
+        idEditando = null;
+    } 
+
+    if (idEditando !== null) {
+        const index = medicos.findIndex(m => m.id === idEditando);
+        if (index !== -1) {
+             medicos[index] = { ...medicos[index], ...datosMedico };
+             alert(`El médico ${apellido} ${nombre} ha sido actualizado.`);
+        }
+        idEditando = null;
     } else {
-        medicos.push({ apellido, nombre, especialidad, telefono, diasAtencion, obraSocial });
+        const nuevo = {
+            id: Date.now(),
+            ...datosMedico
+        };
+        medicos.push(nuevo);
         alert(
-            `El médico ${apellido} ${nombre} ha sido dado de alta con la especialidad de ${especialidad}\n` +
-            `Teléfono: ${telefono}\n` +
-            `Obras sociales aceptadas: ${obraSocial}\n` +
-            `Días de atención: ${diasAtencion}`
+            `El médico ${apellido} ${nombre} ha sido dado de alta con la especialidad de ${especialidad}`
         );
     }
 
-    const nuevo = {
-        id: Date.now(),
-        apellido,
-        nombre,
-        especialidad,
-        telefono,
-        diasAtencion,
-        obraSocial
-    };
-
-    medicos.push(nuevo);
-    guardarMedicos(medicos);
-    alert(`El médico ${apellido} ${nombre} ha sido dado de alta.`);
+    guardarMedicos(medicos); 
+    
     limpiarFormulario();
     listarMedicos();
-}
-
-function crearFilaMedico(m){
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-        <td>${m.apellido} ${m.nombre}</td>
-        <td>${m.especialidad}</td>
-        <td>${m.telefono || '-'}</td>
-        <td>${m.obraSocial || '-'}</td>
-        <td>${m.diasAtencion || '-'}</td>
-        <td>
-          <button type="button" class="btn-ver" onclick="verMedico(${m.id})">Ver</button>
-          <button type="button" class="btn-editar" onclick="editarMedico(${m.id})">Editar</button>
-          <button type="button" class="btn-eliminar" onclick="eliminarMedico(${m.id})">Eliminar</button>
-        </td>
-    `;
-    return tr;
 }
 
 export function listarMedicos(){
@@ -137,7 +136,7 @@ export function listarMedicos(){
     const medicos = obtenerMedicos();
     tablaMedicosBody.innerHTML = '';
     if(medicos.length === 0){
-        tablaMedicosBody.innerHTML = '<tr><td colspan="6">No hay médicos registrados.</td></tr>';
+        tablaMedicosBody.innerHTML = '<tr><td colspan="7">No hay médicos registrados.</td></tr>'; 
         return;
     }
     medicos.forEach(m => tablaMedicosBody.appendChild(crearFilaMedico(m)));
@@ -147,7 +146,7 @@ window.verMedico = function(id){
     const medicos = obtenerMedicos();
     const m = medicos.find(x => String(x.id) === String(id));
     if(!m){ alert('Médico no encontrado'); return; }
-    const detalle = `Nombre: ${m.apellido} ${m.nombre}\nEspecialidad: ${m.especialidad}\nTeléfono: ${m.telefono || '-'}\nObras Sociales: ${m.obraSocial || '-'}\nDías de atención: ${m.diasAtencion || '-'}`;
+    const detalle = `Nombre: ${m.apellido || ''} ${m.nombre || ''}\nEspecialidad: ${m.especialidad || '-'}\nTeléfono: ${m.telefono || '-'}\nObras Sociales: ${m.obraSocial || '-'}\nDías de atención: ${m.diasAtencion || '-'}`;
     alert(detalle);
 }
 
@@ -155,12 +154,14 @@ window.editarMedico = function(id){
     const medicos = obtenerMedicos();
     const m = medicos.find(x => String(x.id) === String(id));
     if(!m){ alert('Médico no encontrado'); return; }
+    
     apellidoInput.value = m.apellido || '';
     nombreInput.value = m.nombre || '';
     especialidadInput.value = m.especialidad || '';
     telefonoInput.value = m.telefono || '';
     diasAtencionInput.value = m.diasAtencion || '';
     obraSocialInput.value = m.obraSocial || '';
+    
     idEditando = m.id;
     const submitBtn = document.getElementById('submitBtn');
     if(submitBtn) submitBtn.textContent = 'Guardar cambios';
@@ -171,18 +172,13 @@ window.eliminarMedico = function(id){
     if(!confirm('¿Querés eliminar este médico?')) return;
     let medicos = obtenerMedicos();
     medicos = medicos.filter(m => String(m.id) !== String(id));
+    
     guardarMedicos(medicos);
     listarMedicos();
-    localStorage.setItem('medicos', JSON.stringify(medicos));
-    formAltaMedico.reset();
-    actualizarTabla();
 }
-
-actualizarTabla();
-formAltaMedico.addEventListener('submit', altaMedicos);
 
 document.addEventListener('DOMContentLoaded', function(){
     listarMedicos();
 });
-actualizarTabla();
+
 formAltaMedico.addEventListener('submit', altaMedicos);
