@@ -2,7 +2,6 @@
 
 <html lang="es">
 
-
 <head>
     <title>Inicio</title>
     <meta charset="UTF-8">
@@ -49,7 +48,7 @@
                 <a class="nav-link" href="#">Turnos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Resultados</a>
+                <a class="nav-link" href="login.html">Ingresar</a>
               </li>
             </ul>
           </div>
@@ -57,30 +56,59 @@
       </nav>
     </header>
 
-
-    <main class="conteiner">
+    <main class="container">
         <section class="mb-5">
-            <h2 class="mb-3">Dar de alta a un medico</h2>
+            <h2 class="mb-3">Dar de alta a un médico</h2>
             <form id="altaMedicosForm">
                   <div class="mb-3">
                     <label for="apellido" class="form-label">Apellido:</label>
-                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                    <input type="text" class="form-control" id="apellido" required>
                 </div>
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    <input type="text" class="form-control" id="nombre" required>
                 </div>
                 <div class="mb-3">
                     <label for="especialidad" class="form-label">Especialidad:</label>
-                    <input type="text" class="form-control" id="especialidad" name="apellido" required>
+                    <input type="text" class="form-control" id="especialidad" required>
                 </div>
-                <button type="submit" class="btn-principal">Registrar</button>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono:</label>
+                    <input type="tel" class="form-control" id="telefono" required>
+                </div>
+                <div class="mb-3">
+                    <label for="obra-social" class="form-label">Obras sociales aceptadas:</label>
+                    <input type="text" class="form-control" id="obra-social" required>
+                </div>
+                <div class="mb-3">
+                    <label for="dias-atencion" class="form-label">Días de Atención:</label>
+                    <input type="text" class="form-control" id="dias-atencion" required>
+                </div>
+                <button type="submit" class="btn-principal">Registrar médico</button>
             </form>
         </section>
 
+        <section>
+          <h3 class="mb-3">Médicos registrados:</h3>
+          <div class="table-responsive">
+            <table border="1" id="tabla-medicos">
+              <thead>
+                <tr>
+                  <th>Nombre completo</th>
+                  <th>Especialidad</th>
+                  <th>Teléfono</th>
+                  <th>Obras sociales</th>
+                  <th>Días de atención</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <!-- Insertar los medicos desde javascript -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
     </main>
-
-
 
     <footer class="big-light text-light ot-5 pb-4">
       <div class="container text-center text-md-start">
