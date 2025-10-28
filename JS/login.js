@@ -1,3 +1,4 @@
+import { login } from "JS/auth.js";
 const formLogin = document.getElementById('formLogin');
 const usuario = document.getElementById('usuario');
 const clave = document.getElementById('clave');
@@ -10,18 +11,17 @@ function mostrarMensaje(texto, tipo = "danger"){
         </div>`;
 }
 
-formLogin.addEventListener('submit', function(event){
+formLogin.addEventListener('submit', async function(event){
     event.preventDefault();
 
     let usuarioInput = usuario.value.trim();
     let claveInput = clave.value.trim();
 
-    const isUsuario = usuarios.find(
-        u => u.usuario === usuarioInput && u.clave === claveInput
-    );
+    const isUsuario = await login(usuarioInput, claveInput);
 
     if(isUsuario){
-        sessionStorage.setItem("usuarioLogueado", usuarioInput);
+        sessionStorage.setItem("usuarioLogueado", isUsuario.username);
+        sessionStorage.setItem("token", isUsuario.accessToken);
         mostrarMensaje(`Hola, ${usuarioInput}`,"success");
         window.location.href = "altaMedicos.html";
     } else {
