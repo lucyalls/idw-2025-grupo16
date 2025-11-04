@@ -102,6 +102,9 @@ function crearFilaMedico(m){
     const nombreCompleto = m.apellido ? `${m.apellido} ${m.nombre}` : m.nombre;
     const especialidadOpt = especialidadInput.querySelector(`option[value="${m.especialidad}"]`);
     const especialidadTexto = especialidadOpt ? especialidadOpt.textContent : m.especialidad;
+    const obrasSocialesTexto = (m.obrasSociales || []).map(idObra => {
+        return obraSocialInput.querySelector(`option[value="${idObra}"]`)?.textContent || idObra;
+    }).join(', ');
     
     tr.innerHTML = `
         <td>${m.id}</td>
@@ -109,6 +112,7 @@ function crearFilaMedico(m){
         <td>${m.matricula || '-'}</td>
         <td>${especialidadTexto || '-'}</td>
         <td>${m.valorConsulta ? '$' + m.valorConsulta : '-'}</td>
+        <td>${obrasSocialesTexto || '-'}</td> 
         <td>
             <button type="button" class="btn-ver" onclick="verMedico(${m.id})">Ver</button>
             <button type="button" class="btn-editar" onclick="editarMedico(${m.id})">Editar</button>
@@ -205,7 +209,7 @@ export function listarMedicos(){
     const medicos = obtenerMedicos();
     tablaMedicosBody.innerHTML = '';
     if(medicos.length === 0){
-        tablaMedicosBody.innerHTML = '<tr><td colspan="6">No hay médicos registrados.</td></tr>'; 
+        tablaMedicosBody.innerHTML = '<tr><td colspan="7">No hay médicos registrados.</td></tr>'; 
         return;
     }
     medicos.forEach(m => tablaMedicosBody.appendChild(crearFilaMedico(m)));
