@@ -10,7 +10,6 @@ const obraSocialInput = document.getElementById('obra-social');
 const fotoInput = document.getElementById('foto');
 const valorConsultaInput = document.getElementById('valor-consulta');
 const telefonoInput = document.getElementById('telefono');
-const diasAtencionInput = document.getElementById('dias-atencion');
 const tablaMedicosBody = document.getElementById('tabla-medicos-body');
 const submitBtn = document.getElementById('submitBtn');
 
@@ -51,7 +50,6 @@ Descripción: ${m.descripcion || '-'}
 Valor Consulta: ${m.valorConsulta ? '$' + m.valorConsulta : '-'}
 Obras Sociales: ${obrasSocialesTexto || '-'}
 Teléfono: ${m.telefono || '-'}
-Días: ${m.diasAtencion || '-'}
     `;
     alert(detalle.trim());
 }
@@ -68,7 +66,6 @@ window.editarMedico = function(id){
     descripcionInput.value = m.descripcion || '';
     valorConsultaInput.value = m.valorConsulta || '';
     telefonoInput.value = m.telefono || '';
-    diasAtencionInput.value = m.diasAtencion || '';
 
     Array.from(obraSocialInput.options).forEach(opt => opt.selected = false);
     if (m.obrasSociales && m.obrasSociales.length > 0) {
@@ -132,7 +129,6 @@ async function altaMedicos(event) {
     let descripcion = descripcionInput.value.trim();
     let valorConsulta = valorConsultaInput.value.trim();
     let telefono = telefonoInput.value.trim();
-    let diasAtencion = diasAtencionInput.value.trim();
     let obrasSociales = Array.from(obraSocialInput.selectedOptions)
                              .map(option => option.value);
     const fotoFile = fotoInput.files[0];
@@ -167,7 +163,6 @@ async function altaMedicos(event) {
             medicos[index].descripcion = descripcion;
             medicos[index].valorConsulta = parseFloat(valorConsulta);
             medicos[index].telefono = telefono;
-            medicos[index].diasAtencion = diasAtencion;
             medicos[index].obrasSociales = obrasSociales;
 
             if (fotoBase64 !== null) {
@@ -196,7 +191,6 @@ async function altaMedicos(event) {
             obrasSociales: obrasSociales, 
             valorConsulta: parseFloat(valorConsulta),
             telefono: telefono, 
-            diasAtencion: diasAtencion,
             foto: fotoBase64
         };
 
