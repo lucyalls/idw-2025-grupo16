@@ -10,6 +10,26 @@
 </head>
 
 <body>
+<script>
+const token = sessionStorage.getItem("token");
+
+//Si hay sesión-->agregar botón Cerrar Sesión
+if(token){
+    const navBar = document.querySelector("#navbarNav ul:last-child");
+    const li = document.createElement("li");
+    li.classList.add("nav-item");
+    li.innerHTML = `<button id="logoutBtn" class="btn btn-danger ms-2">Cerrar sesión</button>`;
+    navBar.appendChild(li);
+}
+
+//Función cerrar sesión
+document.addEventListener("click", (e) => {
+    if(e.target.id === "logoutBtn"){
+        sessionStorage.clear();
+        window.location.href = "login.html";
+    }
+});
+</script>
 
     <header>
         <nav class="custom-navbar navbar navbar-expand-lg">
