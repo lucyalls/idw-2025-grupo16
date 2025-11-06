@@ -228,3 +228,10 @@ footer{
   background: rgba(36, 44, 80, 0.7);
   z-index: 1; 
 }
+
+.has-img-bg {
+  background-image: url('../img/institucional.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 450px;
+}
