@@ -1,63 +1,102 @@
-export const medicos= [
+export const medicos = [
     {
-        id: 1,
-        nombre: "Dr. Juan Pérez",
-        especialidad: "Cardiología",
-        imagen: "imagen1.jpg"  
+        id: 1, 
+        matricula: 12345,
+        apellido: "Perez",
+        nombre: "Juan",
+        especialidad: 1,
+        descripcion: "Especialista en Cardiología",
+        obrasSociales: [101, 102],
+        foto: null,
+        valorConsulta: 5000
     },
     {
         id: 2,
-        nombre: "Dr. María Gómez",
-        especialidad: "Pediatría",
-        imagen: "imagen2.jpg"
+        matricula: 67890,
+        apellido: "Gómez",
+        nombre: "María",
+        especialidad: 3,
+        descripcion: "Especialista en Pediatría.",
+        obrasSociales: [101, 103, 104],
+        foto: null,
+        valorConsulta: 4500
     },
     {
         id: 3,
-        nombre: "Dr. Carlos Rodríguez",
-        especialidad: "Neurología",
-        imagen: "imagen3.jpg"
+        matricula: 54321,
+        apellido: "Rodríguez",
+        nombre: "Carlos",
+        especialidad: 2,
+        descripcion: "Especialista en Neurología.",
+        obrasSociales: [102, 104],
+        foto: null,
+        valorConsulta: 5500
     },
-
     {
         id: 4,
-        nombre: "Dr. Ana López",
-        especialidad: "Oncología",
-        imagen: "imagen4.jpg"
+        matricula: 87625,
+        apellido: "López",
+        nombre: "Ana",
+        especialidad: 4,
+        descripcion: "Especialista en Oncología.",
+        obrasSociales: [101, 103, 104],
+        foto: null,
+        valorConsulta: 6000
     },
-
     {
         id: 5,
-        nombre: "Dr. Pedro Martínez",
-        especialidad: "Urología",
-        imagen: "imagen5.jpg"
+        matricula: 87835,
+        apellido: "Martínez",
+        nombre: "Pedro",
+        especialidad: 5,
+        descripcion: "Especialista en Urología.",
+        obrasSociales: [103, 104],
+        foto: null,
+        valorConsulta: 6000
     },
-
     {
         id: 6,
-        nombre: "Dr. Laura Sánchez",
-        especialidad: "Ginecología",
-        imagen: "imagen6.jpg"
+        matricula: 11285,
+        apellido: "Sánchez",
+        nombre: "Laura",
+        especialidad: 4,
+        descripcion: "Especialista en Ginecología.",
+        obrasSociales: [104],
+        foto: null,
+        valorConsulta: 7600
     },
-
     {
         id: 7,
-        nombre: "Dr. Luis Hernández",
-        especialidad: "Oftalmología",
-        imagen: "imagen7.jpg"
+        matricula: 92648,
+        apellido: "Hernández",
+        nombre: "Luis",
+        especialidad: 4,
+        descripcion: "Especialista en Oftalmología.",
+        obrasSociales: [101, 102],
+        foto: null,
+        valorConsulta: 9000
     },
-
     {
         id: 8,
-        nombre: "Dr. Carolina Torres",
-        especialidad: "Pediatría",
-        imagen: "imagen8.jpg"
+        matricula: 19375,
+        apellido: "Torres",
+        nombre: "Carolina",
+        especialidad: 3,
+        descripcion: "Especialista en Pediatría",
+        obrasSociales: [101, 102, 104],
+        foto: null,
+        valorConsulta: 5000
     },
-
     {
         id: 9,
-        nombre: "Dr. Miguel Díaz",
-        especialidad: "Neurología",
-        imagen: "imagen9.jpg"
-    },
+        matricula: 38264,
+        apellido: "Díaz",
+        nombre: "Miguel",
+        especialidad: 2,
+        descripcion: "Especialista en Neurología.",
+        obrasSociales: [101, 103, 104],
+        foto: null,
+        valorConsulta: 8500
+    }
 
-]
+];

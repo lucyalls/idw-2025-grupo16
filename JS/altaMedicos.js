@@ -178,24 +178,31 @@ async function altaMedicos(event) {
         }
         idEditando = null;
 
-    } else {
+} else {
+        let maxId = 0;
+        if (medicos.length > 0) {
+            maxId = Math.max(...medicos.map(m => m.id));
+        }
+        
+        const nuevoId = maxId + 1;
+
         const nuevo = {
-            id: Date.now(),
-            apellido: apellido,
-            nombre: nombre,
+            id: nuevoId,
             matricula: parseInt(matricula),
-            especialidad: especialidad,
-            descripcion: descripcion,
+            apellido: apellido, 
+            nombre: nombre, 
+            especialidad: parseInt(especialidad),
+            descripcion: descripcion, 
+            obrasSociales: obrasSociales, 
             valorConsulta: parseFloat(valorConsulta),
-            telefono: telefono,
+            telefono: telefono, 
             diasAtencion: diasAtencion,
-            obrasSociales: obrasSociales,
             foto: fotoBase64
         };
 
         medicos.push(nuevo);
         alert(
-            `El médico ${apellido} ${nombre} ha sido dado de alta.`
+            `El médico ${apellido} ${nombre} ha sido dado de alta con el ID ${nuevoId}.`
         );
     }
 
