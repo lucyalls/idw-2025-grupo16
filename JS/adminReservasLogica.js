@@ -1,7 +1,3 @@
-/* =======================================================
-   adminReservasLogica.js (Versión corregida)
-   ======================================================= */
-
 import { 
     obtenerMedicos, 
     obtenerTurnos, 
@@ -10,21 +6,14 @@ import {
     guardarReservas
 } from './localStorage.js';
 
-// --- Selectores del DOM ---
-// (Lo podemos buscar aquí porque 'type="module"' espera al HTML)
 const tablaBody = document.getElementById('tabla-reservas-body');
 
-// --- Carga inicial ---
-// Cuando el HTML está listo, solo llamamos a la función
 document.addEventListener('DOMContentLoaded', () => {
     listarReservasAdmin();
 });
 
-// --- Funciones ---
-
-// (¡CORRECCIÓN! Sacamos esta función afuera del DOMContentLoaded)
 function listarReservasAdmin() {
-    tablaBody.innerHTML = ''; // Limpiamos la tabla
+    tablaBody.innerHTML = '';
     const reservas = obtenerReservas();
     const turnos = obtenerTurnos();
     const medicos = obtenerMedicos();
@@ -61,10 +50,8 @@ function listarReservasAdmin() {
     });
 }
 
-// (¡NUEVA FUNCIÓN!)
 window.reagendarReserva = function(idReserva, idTurnoViejo) {
     
-    // 1. Preguntamos al admin el ID del nuevo turno
     const idTurnoNuevoInput = prompt(
         `Vas a mover la reserva ID: ${idReserva}.\n\n` +
         `Actualmente está en el Turno ID: ${idTurnoViejo}.\n\n` +
@@ -72,7 +59,7 @@ window.reagendarReserva = function(idReserva, idTurnoViejo) {
     );
 
     if (!idTurnoNuevoInput) {
-        return; // El admin apretó "cancelar"
+        return;
     }
 
     const idTurnoNuevo = parseInt(idTurnoNuevoInput);
@@ -90,7 +77,6 @@ window.reagendarReserva = function(idReserva, idTurnoViejo) {
     let todosLosTurnos = obtenerTurnos();
     let todasLasReservas = obtenerReservas();
 
-    // 2. Verificamos que el NUEVO turno exista y esté disponible
     const indexTurnoNuevo = todosLosTurnos.findIndex(t => t.id === idTurnoNuevo);
 
     if (indexTurnoNuevo === -1) {
@@ -102,52 +88,41 @@ window.reagendarReserva = function(idReserva, idTurnoViejo) {
         return;
     }
 
-    // 3. ¡Éxito! Hacemos la transacción
-    
-    // a. Liberamos el TURNO VIEJO
     const indexTurnoViejo = todosLosTurnos.findIndex(t => t.id === idTurnoViejo);
     if (indexTurnoViejo !== -1) {
         todosLosTurnos[indexTurnoViejo].disponible = true;
     }
 
-    // b. Ocupamos el TURNO NUEVO
     todosLosTurnos[indexTurnoNuevo].disponible = false;
 
-    // c. Actualizamos la RESERVA
     const indexReserva = todasLasReservas.findIndex(r => r.id === idReserva);
     if (indexReserva !== -1) {
         todasLasReservas[indexReserva].idTurno = idTurnoNuevo;
     }
 
-    // 4. Guardamos los cambios
     guardarTurnos(todosLosTurnos);
     guardarReservas(todasLasReservas);
 
-    // 5. Avisamos y refrescamos la tabla
     alert(`¡Éxito! La reserva ID: ${idReserva} se movió del Turno ${idTurnoViejo} al Turno ${idTurnoNuevo}.`);
-    listarReservasAdmin(); // <-- Ahora sí la puede llamar
+    listarReservasAdmin();
 }
 
-
-// (¡CORRECCIÓN! Esta función ahora puede llamar a 'listarReservasAdmin')
 window.cancelarReserva = function(idReserva, idTurno) {
     if (confirm(`¿Estás seguro de que querés CANCELAR esta reserva? (El turno ID: ${idTurno} volverá a estar disponible)`)) {
         
-        // --- Paso 1: Eliminar la Reserva ---
         let reservas = obtenerReservas();
         reservas = reservas.filter(r => r.id !== idReserva);
         guardarReservas(reservas);
 
-        // --- Paso 2: Liberar el Turno (¡MUY IMPORTANTE!) ---
         let turnos = obtenerTurnos();
         const indexTurno = turnos.findIndex(t => t.id === idTurno);
         
         if (indexTurno !== -1) {
-            turnos[indexTurno].disponible = true; // Lo volvemos a poner disponible
+            turnos[indexTurno].disponible = true;
             guardarTurnos(turnos);
         }
 
         alert('¡Reserva cancelada! El turno ahora está disponible nuevamente.');
-        listarReservasAdmin(); // <-- Ahora sí la puede llamar
+        listarReservasAdmin();
     }
 }
