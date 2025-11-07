@@ -111,9 +111,9 @@ function crearFilaMedico(m){
         <td>${m.valorConsulta ? '$' + m.valorConsulta : '-'}</td>
         <td>${obrasSocialesTexto || '-'}</td> 
         <td>
-            <button type="button" class="btn-ver" onclick="verMedico(${m.id})">Ver</button>
-            <button type="button" class="btn-editar" onclick="editarMedico(${m.id})">Editar</button>
-            <button type="button" class="btn-eliminar" onclick="eliminarMedico(${m.id})">Eliminar</button>
+            <button type="button" class="btn" onclick="verMedico(${m.id})">Ver</button>
+            <button type="button" class="btn btn-sm btn-warning" onclick="editarMedico(${m.id})">Editar</button>
+            <button type="button" class="btn btn-sm btn-danger" onclick="eliminarMedico(${m.id})">Eliminar</button>
         </td>
     `;
     return tr;
