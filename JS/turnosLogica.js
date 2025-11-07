@@ -195,11 +195,18 @@ formReserva.addEventListener('submit', (event) => {
     let todasLasReservas = obtenerReservas();
     let medicos = obtenerMedicos();
 
+    let maxId = 0;
+    if (todasLasReservas.length > 0) {
+        maxId = Math.max(...todasLasReservas.map(r => r.id));
+    }
+    
+    const nuevoIdReserva = maxId + 1;
+
     const turnoSeleccionado = todosLosTurnos.find(t => t.id === idTurno);
     const medicoDelTurno = medicos.find(m => m.id === turnoSeleccionado.idMedico);
 
     const nuevaReserva = {
-        id: Date.now(),
+        id: nuevoIdReserva,
         documentoPaciente: dniPaciente,
         nombrePaciente: nombrePaciente,
         fechaNacimiento: fechaNacimiento,
@@ -216,7 +223,8 @@ formReserva.addEventListener('submit', (event) => {
     todosLosTurnos[indiceTurno].disponible = false;
     guardarTurnos(todosLosTurnos);
 
-    alert(`¡Reserva confirmada!
+
+    alert(`¡Reserva confirmada con el ID ${nuevoIdReserva}!
 Paciente: ${nombrePaciente}
 Médico: ${medicoDelTurno.nombre} ${medicoDelTurno.apellido}
 Fecha: ${turnoSeleccionado.fechaHora}`);

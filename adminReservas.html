@@ -43,15 +43,30 @@
         </nav>
     </header>
 
+
+
     <main class="container py-5 flex-grow-1">
         <a href="admin.html" class="btn-principal btn-lg mb-6">
             ← Volver al Panel de Administración
         </a>
-        <h1 class="texto-centro mb-5 mt-5">Panel de Administración de Reservas</h1>
+        <h1 class="texto-centro mt-5">Panel de Administración de Reservas</h1>
+        <p class="mb-5">Acá podés ver todos los turnos reservados por pacientes y cancelarlos si es necesario.</p>
 
-        <section class="mb-5 p-4 border rounded">
-            <h2 class="mb-4">Registro de reservas:</h2>
-        </section>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID Reserva</th>
+                            <th>Paciente</th>
+                            <th>DNI</th>
+                            <th>Médico</th>
+                            <th>Turno (Fecha y Hora)</th>
+                            <th>Acciones</th> </tr>
+                    </thead>
+                <tbody id="tabla-reservas-body">
+                    </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="text-light mt-5">
@@ -99,10 +114,7 @@
         </div>
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6C8Xz7vE2pW2fMv0nC1tP4P6J2G8D6D9Fq2ZpQx9o4u8V5b3S2K1L7A9Y0YxG3V"
-        crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/adminReservasLogica.js" type="module"></script>
 </body>
-
 </html>
