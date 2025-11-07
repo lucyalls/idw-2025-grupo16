@@ -7,7 +7,6 @@ const KEY_TURNOS = 'listaTurnos';
 const KEY_RESERVAS = 'listaReservas';
 const KEY_ESPECIALIDADES = 'listaEspecialidades';
 
-// --- MÉDICOS ---
 export function guardarMedicos(medicosAGuardar) {
     localStorage.setItem(KEY_MEDICOS, JSON.stringify(medicosAGuardar));
 }
@@ -22,7 +21,6 @@ export function obtenerMedicos() {
     }
 }
 
-// --- TURNOS ---
 export function guardarTurnos(turnosAGuardar) {
     localStorage.setItem(KEY_TURNOS, JSON.stringify(turnosAGuardar));
 }
@@ -37,7 +35,6 @@ export function obtenerTurnos() {
     }
 }
 
-// --- RESERVAS ---
 export function guardarReservas(reservas) {
     localStorage.setItem(KEY_RESERVAS, JSON.stringify(reservas));
 }
