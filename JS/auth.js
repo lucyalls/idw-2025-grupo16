@@ -1,6 +1,6 @@
 export async function login(userParam, passParam) {
     try {
-        const response = await fetch('http://dummyjson.com/auth/login', {
+        const response = await fetch('https://dummyjson.com/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
