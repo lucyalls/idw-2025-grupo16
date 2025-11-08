@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async() => {
-    const tablaUsuariosBody = document.querySelector('#tablausuarios tbody');
+    const tablaUsuariosBody = document.querySelector('#tablaUsuarios tbody');
 
     try {
         const response = await fetch('https://dummyjson.com/users');

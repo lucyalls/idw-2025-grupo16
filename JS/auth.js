@@ -1,4 +1,4 @@
-export async function login(usernameParam, passwordParam) {
+export async function login(userParam, passParam) {
     try {
         const response = await fetch('http://dummyjson.com/auth/login', {
             method: 'POST',
@@ -6,12 +6,12 @@ export async function login(usernameParam, passwordParam) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-                username: usernameParam,
-                password: passwordParam
+                username: userParam,
+                password: passParam
             })
         });
 
-        if (response.ok) {
+        if (!response.ok) {
             console.error('Error al iniciar sesión');
             return false;
 
