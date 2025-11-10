@@ -51,6 +51,49 @@
 
         <section class="mb-5 p-4 border rounded">
             <h2 class="mb-4">Registro de nueva Obra Social:</h2>
+            <section class="mb-5 p-4 border rounded bg-light">
+    <form id="formObraSocial" class="row g-3">
+        <div class="col-md-6">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" required>
+        </div>
+        <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="telefono" required>
+        </div>
+        <div class="col-md-6">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccion" required>
+        </div>
+        <div class="col-md-6">
+            <label for="plan" class="form-label">Plan</label>
+            <input type="text" class="form-control" id="plan" required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" id="btnCancelar" class="btn btn-secondary" style="display:none;">Cancelar</button>
+        </div>
+    </form>
+</section>
+
+<section class="mb-5 p-4 border rounded bg-light">
+    <h2 class="mb-4">Listado de Obras Sociales</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Plan</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaObrasSociales"></tbody>
+        </table>
+    </div>
+</section>
         </section>
     </main>
 
@@ -102,6 +145,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6C8Xz7vE2pW2fMv0nC1tP4P6J2G8D6D9Fq2ZpQx9o4u8V5b3S2K1L7A9Y0YxG3V"
         crossorigin="anonymous"></script>
+
 
 </body>
 
