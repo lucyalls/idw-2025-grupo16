@@ -1,11 +1,12 @@
-import { 
-    obtenerMedicos, 
-    obtenerTurnos, 
-    guardarTurnos, 
-    obtenerReservas, 
-    guardarReservas,
-    obtenerEspecialidades
-} from './localStorage.js';
+import { especialidades } from "./especialidades.js";
+import {
+  obtenerMedicos,
+  obtenerTurnos,
+  guardarTurnos,
+  obtenerReservas,
+  guardarReservas,
+  obtenerEspecialidades
+} from "./localStorage.js";
 
 let estadoReserva = {
     idEspecialidad: null,
@@ -66,7 +67,6 @@ document.getElementById('btn-buscar-profesional').addEventListener('click', () =
     mostrarPaso(3);
 });
 
-
 function poblarEspecialidades() {
     divListaEspecialidades.innerHTML = '';
     const especialidades = obtenerEspecialidades();
@@ -109,13 +109,19 @@ function poblarProfesionales(idEspecialidad) {
 
     medicosFiltrados.forEach(medico => {
         divListaProfesionales.innerHTML += `
-            <div class="col-md-6">
-                <div class="card">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <img 
+                        src="${medico.foto ? medico.foto : './img/doctor.jpg'}" 
+                        class="card-img-top" 
+                        alt="Foto de ${medico.nombre} ${medico.apellido}" 
+                        style="height: 200px; object-fit: cover;"
+                    >
                     <div class="card-body">
                         <h5 class="card-title">${medico.nombre} ${medico.apellido}</h5>
                         <p class="card-text">${medico.descripcion || 'Sin descripción.'}</p>
                         <button type="button" 
-                                class="btn-principal" 
+                                class="btn btn-principal mt-2" 
                                 onclick="handleProfesionalClick(${medico.id})">
                             Ver Turnos
                         </button>
@@ -125,6 +131,7 @@ function poblarProfesionales(idEspecialidad) {
         `;
     });
 }
+
 window.handleProfesionalClick = function(idMedico) {
     estadoReserva.idMedico = idMedico;
     poblarTurnos(idMedico);
@@ -176,7 +183,6 @@ function poblarFormulario(idTurno) {
     inputIdTurno.value = idTurno;
 }
 
-
 formReserva.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -222,7 +228,6 @@ formReserva.addEventListener('submit', (event) => {
     const indiceTurno = todosLosTurnos.findIndex(t => t.id === idTurno);
     todosLosTurnos[indiceTurno].disponible = false;
     guardarTurnos(todosLosTurnos);
-
 
     alert(`¡Reserva confirmada con el ID ${nuevoIdReserva}!
 Paciente: ${nombrePaciente}

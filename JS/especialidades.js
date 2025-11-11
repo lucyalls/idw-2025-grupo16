@@ -1,3 +1,8 @@
+export const especialidades = [
+  { id: 1, nombre: "Cardiología" },
+  { id: 2, nombre: "Pediatría" },
+];
+
 function obtenerEspecialidades() {
   return JSON.parse(localStorage.getItem("especialidades")) || [];
 }
@@ -8,8 +13,9 @@ function guardarEspecialidades(especialidades) {
 
 function mostrarEspecialidades() {
   const tabla = document.getElementById("tablaEspecialidades");
-  const especialidades = obtenerEspecialidades();
+  if (!tabla) return;
 
+  const especialidades = obtenerEspecialidades();
   tabla.innerHTML = "";
 
   especialidades.forEach((esp) => {
@@ -27,27 +33,6 @@ function mostrarEspecialidades() {
   });
 }
 
-document.getElementById("formEspecialidad").addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const nombre = document.getElementById("nombre").value.trim();
-  const descripcion = document.getElementById("descripcion").value.trim();
-
-  if (nombre === "" || descripcion === "") {
-    alert("Por favor completá todos los campos.");
-    return;
-  }
-
-  const especialidades = obtenerEspecialidades();
-  const id = especialidades.length > 0 ? especialidades[especialidades.length - 1].id + 1 : 1;
-
-  especialidades.push({ id, nombre, descripcion });
-  guardarEspecialidades(especialidades);
-
-  document.getElementById("formEspecialidad").reset();
-  mostrarEspecialidades();
-});
-
 function eliminarEspecialidad(id) {
   if (!confirm("¿Seguro que querés eliminar esta especialidad?")) return;
 
@@ -59,7 +44,6 @@ function eliminarEspecialidad(id) {
 function editarEspecialidad(id) {
   const especialidades = obtenerEspecialidades();
   const especialidad = especialidades.find((esp) => esp.id === id);
-
   if (!especialidad) return;
 
   document.getElementById("nombre").value = especialidad.nombre;
@@ -98,4 +82,36 @@ function guardarEdicion(id) {
   boton.onclick = null;
 }
 
-document.addEventListener("DOMContentLoaded", mostrarEspecialidades);
+document.addEventListener("DOMContentLoaded", () => {
+  mostrarEspecialidades();
+
+  const form = document.getElementById("formEspecialidad");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombre").value.trim();
+      const descripcion = document.getElementById("descripcion").value.trim();
+
+      if (nombre === "" || descripcion === "") {
+        alert("Por favor completá todos los campos.");
+        return;
+      }
+
+      const especialidades = obtenerEspecialidades();
+      const id =
+        especialidades.length > 0
+          ? especialidades[especialidades.length - 1].id + 1
+          : 1;
+
+      especialidades.push({ id, nombre, descripcion });
+      guardarEspecialidades(especialidades);
+
+      form.reset();
+      mostrarEspecialidades();
+    });
+  }
+});
+
+window.eliminarEspecialidad = eliminarEspecialidad;
+window.editarEspecialidad = editarEspecialidad;
