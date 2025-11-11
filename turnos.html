@@ -53,76 +53,92 @@
     </header>
 
 <main class="container py-5">
-        <div class="card p-4">
+    
+    <div class="card p-4">
 
-            <div id="paso-1" class="paso">
-                <h3 class="mb-4">¿Cómo querés buscar tu turno?</h3>
-                <div class="d-grid gap-3">
-                    <button id="btn-buscar-especialidad" class="btn-principal btn-lg">Buscar por Especialidad</button>
-                    <button id="btn-buscar-profesional" class="btn-principal btn-lg">Buscar por Profesional</button>
+<div id="paso-1" class="paso">
+    <h3 class="mb-4">¿Cómo querés buscar tu turno?</h3>
+    <div class="d-grid gap-3">
+        <button id="btn-buscar-especialidad" class="btn-principal btn-lg">Buscar por Especialidad</button>
+        <button id="btn-buscar-profesional" class="btn-principal btn-lg">Buscar por Profesional</button>
+    </div>
+    
+    <div id="seccion-mis-reservas" class="card p-4 mt-5">
+        <h3 class="mb-4">Mis Reservas</h3>
+        <p>Ingresá tu DNI para ver las reservas que ya tenés.</p>
+        
+        <form id="form-buscar-reservas">
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="dni-buscar" class="form-label visually-hidden">Tu DNI</label>
+                    <input type="text" class="form-control" id="dni-buscar" placeholder="Ingresá tu DNI sin puntos" required>
+                </div>
+                <div class="col-md-4 d-flex align-items-end mt-2 mt-md-0">
+                    <button type="submit" class="btn-principal w-100">Buscar mis reservas</button>
                 </div>
             </div>
+        </form>
 
+        <div id="resultado-reservas" class="mt-4">
+            </div>
+    </div>
+    </div>
             <div id="paso-2" class="paso d-none">
-                <h3 class="mb-4">Paso 2: Elegí la Especialidad</h3>
-                <div id="lista-especialidades" class="list-group">
-                    </div>
-                <button class="btn btn-link mt-3" onclick="volverAPaso1()">← Volver</button>
-            </div>
-
-            <div id="paso-3" class="paso d-none">
-                <h3 class="mb-4" id="titulo-paso-3">Paso 3: Elegí al Profesional</h3>
-                <div id="lista-profesionales" class="row g-3">
-                        </div>
-                    <button class="btn btn-link mt-3" onclick="volverDesdeProfesionales()">← Volver</button>
-                </div>
-
-            <div id="paso-4" class="paso d-none">
-                <h3 class="mb-4" id="titulo-paso-4">Paso 4: Elegí un Turno</h3>
-                <div id="lista-turnos" class="list-group">
-                    </div>
-                <button class="btn btn-link mt-3" onclick="volverAPaso3()">← Volver</button>
-            </div>
-
-            <div id="paso-5" class="paso d-none">
-                <h3 class="mb-4">Paso 5: Completá tus Datos</h3>
-                <div class="alert alert-info" id="info-turno-seleccionado">...</div>
-                
-                <form id="form-reserva">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="paciente-nombre" class="form-label">Nombre y Apellido (*)</label>
-                            <input type="text" class="form-control" id="paciente-nombre" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="paciente-dni" class="form-label">Documento (*)</label>
-                            <input type="text" class="form-control" id="paciente-dni" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="paciente-obra-social" class="form-label">Obra Social (*)</label>
-                            <select class="form-select" id="paciente-obra-social" required>
-                                <option value="" disabled selected>Seleccione una</option>
-                                <option value="101">OSDE</option>
-                                <option value="102">Swiss Medical</option>
-                                <option value="103">PAMI</option>
-                                <option value="104">Particular</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="paciente-nacimiento" class="form-label">Fecha de Nacimiento (*)</label>
-                            <input type="date" class="form-control" id="paciente-nacimiento" required>
-                        </div>
-                    </div>
-                    <input type="hidden" id="id-turno-reservado">
-                    <div class="mt-4">
-                        <button type="submit" class="btn btn-success btn-lg">Confirmar Reserva</button>
-                        <button type="button" class="btn btn-link ms-2" onclick="volverAPaso4()">← Volver</button>
-                    </div>
-                </form>
-            </div>
-
+            <h3 class="mb-4">Paso 2: Elegí la Especialidad</h3>
+            <div id="lista-especialidades" class="list-group"></div>
+            <button id="btn-volver-a-1" class="btn btn-link mt-3">← Volver</button>
         </div>
-    </main>
+
+        <div id="paso-3" class="paso d-none">
+            <h3 class="mb-4" id="titulo-paso-3">Paso 3: Elegí al Profesional</h3>
+            <div id="lista-profesionales" class="row g-3"></div>
+            <button id="btn-volver-a-paso3" class="btn btn-link mt-3">← Volver</button>
+        </div>
+
+        <div id="paso-4" class="paso d-none">
+            <h3 class="mb-4" id="titulo-paso-4">Paso 4: Elegí un Turno</h3>
+            <div id="lista-turnos" class="list-group"></div>
+            <button id="btn-volver-a-3" class="btn btn-link mt-3">← Volver</button>
+        </div>
+
+        <div id="paso-5" class="paso d-none">
+            <h3 class="mb-4">Paso 5: Completá tus Datos</h3>
+            <div class="alert alert-info" id="info-turno-seleccionado">...</div>
+            
+            <form id="form-reserva">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="paciente-nombre" class="form-label">Nombre y Apellido (*)</label>
+                        <input type="text" class="form-control" id="paciente-nombre" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="paciente-dni" class="form-label">Documento (*)</label>
+                        <input type="text" class="form-control" id="paciente-dni" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="paciente-obra-social" class="form-label">Obra Social (*)</label>
+                        <select class="form-select" id="paciente-obra-social" required>
+                            <option value="" disabled selected>Seleccione una</option>
+                            <option value="101">OSDE</option>
+                            <option value="102">Swiss Medical</option>
+                            <option value="103">PAMI</option>
+                            <option value="104">Particular</option>
+                        </select>
+                    </div>
+                     <div class="col-md-6">
+                        <label for="paciente-nacimiento" class="form-label">Fecha de Nacimiento (*)</label>
+                        <input type="date" class="form-control" id="paciente-nacimiento" required>
+                    </div>
+                </div>
+                <input type="hidden" id="id-turno-reservado">
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">Confirmar Reserva</button>
+                    <button type="button" id="btn-volver-a-4" class="btn btn-link ms-2">← Volver</button>
+                </div>
+            </form>
+        </div>
+    </div> 
+  </main>
 
     <footer class="text-light mt-5">
         <div class="container text-center text-md-start">

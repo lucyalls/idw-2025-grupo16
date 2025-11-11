@@ -26,6 +26,9 @@ const inputIdTurno = document.getElementById('id-turno-reservado');
 const inputPacienteNombre = document.getElementById('paciente-nombre');
 const inputPacienteDNI = document.getElementById('paciente-dni');
 const selectPacienteObraSocial = document.getElementById('paciente-obra-social');
+const formBuscarReservas = document.getElementById('form-buscar-reservas');
+const inputDniBuscar = document.getElementById('dni-buscar');
+const divResultadoReservas = document.getElementById('resultado-reservas');
 
 window.mostrarPaso = function(numeroPaso) {
     document.querySelectorAll('.paso').forEach(paso => {
@@ -65,6 +68,18 @@ document.getElementById('btn-buscar-profesional').addEventListener('click', () =
     estadoReserva.vieneDeEspecialidad = false;
     poblarProfesionales(null);
     mostrarPaso(3);
+});
+
+formBuscarReservas.addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    const dniBuscado = inputDniBuscar.value.trim();
+    if (!dniBuscado) {
+        divResultadoReservas.innerHTML = '<div class="alert alert-warning">Por favor, ingresá un DNI.</div>';
+        return;
+    }
+    
+    mostrarMisReservas(dniBuscado);
 });
 
 function poblarEspecialidades() {
@@ -255,3 +270,44 @@ Fecha: ${turnoSeleccionado.fechaHora}`);
     estadoReserva = {};
     mostrarPaso(1);
 });
+
+function mostrarMisReservas(dni) {
+    divResultadoReservas.innerHTML = "";
+    
+    const todasLasReservas = obtenerReservas();
+    const medicos = obtenerMedicos();
+    const turnos = obtenerTurnos();
+
+    const misReservas = todasLasReservas.filter(r => r.documentoPaciente === dni);
+
+    if (misReservas.length === 0) {
+        divResultadoReservas.innerHTML = `<div class="alert alert-info">No se encontraron reservas para el DNI: <strong>${dni}</strong></div>`;
+        return;
+    }
+
+    let html = '<h4 class="mb-3">Reservas Encontradas:</h4>';
+    html += '<div class="list-group">';
+
+    misReservas.forEach(reserva => {
+        const turno = turnos.find(t => t.id === reserva.idTurno);
+        const medico = turno ? medicos.find(m => m.id === turno.idMedico) : null;
+        
+        const nombreMedico = medico ? `${medico.nombre} ${medico.apellido}` : 'Médico no encontrado';
+        const fechaTurno = turno ? turno.fechaHora : 'Turno no encontrado';
+const estadoTurno = turno ? (turno.disponible ? ' (CANCELADO POR ADMIN)' : ' (RESERVADO)') : ' (TURNO ELIMINADO)';
+
+        html += `
+            <div class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Médico: <strong>${nombreMedico}</strong></h5>
+                    <small>Reserva ID: ${reserva.id}</small>
+                </div>
+                <p class="mb-1">Fecha: <strong>${fechaTurno}</strong>${estadoTurno}</p>
+                <small>Paciente: ${reserva.nombrePaciente}</small>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+    divResultadoReservas.innerHTML = html;
+}
