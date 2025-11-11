@@ -23,7 +23,7 @@ formLogin.addEventListener('submit', async function(event){
         sessionStorage.setItem("usuarioLogueado", isUsuario.username);
         sessionStorage.setItem("token", isUsuario.accessToken);
         mostrarMensaje(`Hola, ${usuarioInput}`,"success");
-        window.location.href = "altaMedicos.html";
+        window.location.href = "admin.html";
     } else {
         mostrarMensaje('Datos inválidos', "danger")
     }
