@@ -89,13 +89,15 @@ window.handleEspecialidadClick = function(idEspecialidad) {
 }
 
 function poblarProfesionales(idEspecialidad) {
-    divListaProfesionales.innerHTML = '';
+    divListaProfesionales.innerHTML = ''; 
     const medicos = obtenerMedicos();
+    const especialidades = obtenerEspecialidades(); 
+    
     let medicosFiltrados = [];
     
     if (idEspecialidad) {
         medicosFiltrados = medicos.filter(m => m.especialidad === idEspecialidad);
-        const esp = obtenerEspecialidades().find(e => e.id === idEspecialidad);
+        const esp = especialidades.find(e => e.id === idEspecialidad);
         tituloPaso3.textContent = `Paso 3: Elegí un Profesional (${esp.nombre})`;
     } else {
         medicosFiltrados = medicos;
@@ -103,32 +105,47 @@ function poblarProfesionales(idEspecialidad) {
     }
 
     if (medicosFiltrados.length === 0) {
-        divListaProfesionales.innerHTML = '<p>No hay médicos disponibles.</p>';
+        divListaProfesionales.innerHTML = '<p>No hay médicos disponibles para esta especialidad.</p>';
         return;
     }
 
+    const placeholderImg = "img/doctor_placeholder.png"; 
+
     medicosFiltrados.forEach(medico => {
-        divListaProfesionales.innerHTML += `
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 text-center shadow-sm">
-                    <img 
-                        src="${medico.foto ? medico.foto : './img/doctor.jpg'}" 
-                        class="card-img-top" 
-                        alt="Foto de ${medico.nombre} ${medico.apellido}" 
-                        style="height: 200px; object-fit: cover;"
-                    >
-                    <div class="card-body">
-                        <h5 class="card-title">${medico.nombre} ${medico.apellido}</h5>
-                        <p class="card-text">${medico.descripcion || 'Sin descripción.'}</p>
-                        <button type="button" 
-                                class="btn btn-principal mt-2" 
-                                onclick="handleProfesionalClick(${medico.id})">
-                            Ver Turnos
-                        </button>
-                    </div>
+        
+        const especialidad = especialidades.find(e => e.id === medico.especialidad);
+        const especialidadNombre = especialidad ? especialidad.nombre : "Especialidad no definida";
+        
+        const divCol = document.createElement('div');
+        divCol.className = 'col-6 col-md-4 col-lg-2 mb-4'; 
+
+        divCol.innerHTML = `
+            <div class="card h-100 text-center"> 
+                
+                <img src="${medico.foto || placeholderImg}" 
+                     class="card-img-top" 
+                     style="height: 180px; object-fit: cover;" 
+                     alt="Foto de ${medico.nombre} ${medico.apellido}">
+                     
+                <div class="card-body d-flex flex-column p-2">
+                    
+                    <h5 class="card-title fs-6">${medico.nombre} ${medico.apellido}</h5>
+                    
+                    <h6 class="card-subtitle mb-2 text-muted">${especialidadNombre}</h6>
+                    
+                    <p class="card-text small text-muted flex-grow-1">
+                        ${medico.descripcion || ''}
+                    </p> 
+                    
+                    <button type="button" 
+                            class="btn-principal btn-sm mt-auto" 
+                            onclick="handleProfesionalClick(${medico.id})">
+                        Ver Turnos
+                    </button>
                 </div>
             </div>
         `;
+        divListaProfesionales.appendChild(divCol);
     });
 }
 
