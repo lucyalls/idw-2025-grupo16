@@ -12,6 +12,7 @@ const nombreInput = document.getElementById("nombre");
 const telefonoInput = document.getElementById("telefono");
 const direccionInput = document.getElementById("direccion");
 const planInput = document.getElementById("plan");
+const porcentajeInput = document.getElementById("porcentaje"); // Campo nuevo agregado
 const idInput = document.getElementById("id");
 
 const tablaListado = document.getElementById("tablaListado");
@@ -20,7 +21,7 @@ const btnCancelar = document.getElementById("btnCancelar");
 
 let editIndex = null;
 
-// --- Mostrar datos en la segunda tabla ---
+// --- Mostrar datos en la tabla ---
 function mostrarObrasSociales() {
   const obras = obtenerObrasSociales();
   tablaListado.innerHTML = "";
@@ -34,6 +35,7 @@ function mostrarObrasSociales() {
       <td>${obra.direccion}</td>
       <td>${obra.plan}</td>
       <td>${obra.telefono}</td>
+      <td>${obra.porcentaje || 0}%</td> <!-- COLUMNA DE PORCENTAJE -->
       <td>
         <button class="btn btn-warning btn-sm" onclick="editarObraSocial(${index})">Editar</button>
         <button class="btn btn-danger btn-sm" onclick="eliminarObraSocial(${index})">Eliminar</button>
@@ -54,6 +56,7 @@ btnGuardar.addEventListener("click", (e) => {
   const telefono = telefonoInput.value.trim();
   const direccion = direccionInput.value.trim();
   const plan = planInput.value.trim();
+  const porcentaje = parseFloat(porcentajeInput.value.trim()) || 0; // NUEVO CAMPO
 
   if (!nombre || !telefono || !direccion || !plan) {
     alert("Por favor, complete todos los campos.");
@@ -61,9 +64,11 @@ btnGuardar.addEventListener("click", (e) => {
   }
 
   if (editIndex === null) {
-    obras.push({ nombre, telefono, direccion, plan }); // Alta sin ID
+    // Alta nueva
+    obras.push({ nombre, telefono, direccion, plan, porcentaje });
   } else {
-    obras[editIndex] = { nombre, telefono, direccion, plan }; // Edita sin ID
+    // Edición
+    obras[editIndex] = { nombre, telefono, direccion, plan, porcentaje };
     editIndex = null;
     btnCancelar.style.display = "none";
     btnGuardar.textContent = "Guardar";
@@ -84,7 +89,7 @@ function eliminarObraSocial(index) {
   const obras = obtenerObrasSociales();
   if (confirm("¿Seguro que desea eliminar esta obra social?")) {
     obras.splice(index, 1);
-    // Reasignar IDs secuenciales después de eliminar
+    // Reasignar IDs
     obras.forEach((obra, idx) => {
       obra.id = idx + 1;
     });
@@ -103,6 +108,7 @@ function editarObraSocial(index) {
   telefonoInput.value = obra.telefono;
   direccionInput.value = obra.direccion;
   planInput.value = obra.plan;
+  porcentajeInput.value = obra.porcentaje || 0;
 
   editIndex = index;
   btnCancelar.style.display = "inline";
@@ -124,8 +130,12 @@ function limpiarFormulario() {
   telefonoInput.value = "";
   direccionInput.value = "";
   planInput.value = "";
+  porcentajeInput.value = "";
 }
 
 // --- Inicializar ---
 mostrarObrasSociales();
+
+
+
 
