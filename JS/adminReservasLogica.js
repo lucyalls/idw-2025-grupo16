@@ -4,7 +4,7 @@ import {
     guardarTurnos, 
     obtenerReservas, 
     guardarReservas,
-    obtenerObrasSociales // 👈 NUEVA IMPORTACIÓN
+    obtenerObrasSociales
 } from './localStorage.js';
 
 const tablaBody = document.getElementById('tabla-reservas-body');
