@@ -35,11 +35,16 @@
     </nav>
   </header>
 
-  <main class="container py-5 flex-grow-1">
-    <a href="admin.html" class="btn-principal btn-lg mb-4">← Volver al Panel de Administración</a>
-    <h1 class="texto-centro mb-4">Administración de Obras Sociales</h1>
+    <main class="container py-5 flex-grow-1">
+        <a href="admin.html" class="btn-principal btn-lg mb-6">
+            ← Volver al Panel de Administración
+        </a>
 
-    <!-- Formulario de alta / edición -->
+        <h1 class="texto-centro mb-5 mt-5">Panel de Administración de Obras Sociales</h1>
+
+        <section class="mb-5 p-4 border rounded">
+            <h2 class="mb-4">Registro de nueva Obra Social:</h2>
+
     <form id="form-obra-social" class="mb-5">
       <div class="row g-3 align-items-center">
         <div class="col-md-5">
@@ -58,7 +63,6 @@
       </div>
     </form>
 
-    <!-- Tabla de obras sociales -->
     <div class="table-responsive">
       <table class="table table-striped text-center align-middle">
         <thead>
@@ -70,7 +74,6 @@
           </tr>
         </thead>
         <tbody id="tabla-obras-body">
-          <!-- Se carga dinámicamente desde obrasSociales.js -->
         </tbody>
       </table>
     </div>
