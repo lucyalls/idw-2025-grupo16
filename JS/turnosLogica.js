@@ -5,7 +5,8 @@ import {
     guardarTurnos,
     obtenerReservas,
     guardarReservas,
-    obtenerEspecialidades
+    obtenerEspecialidades,
+    obtenerObrasSociales
 } from "./localStorage.js";
 
 let estadoReserva = {
@@ -43,7 +44,7 @@ function mostrarPaso(numeroPaso) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-
+    cargarObrasSocialesSelect();
 
     document.getElementById('btn-buscar-especialidad').addEventListener('click', () => {
         estadoReserva.vieneDeEspecialidad = true;
@@ -207,6 +208,20 @@ divListaTurnos.addEventListener('click', (event) => {
         mostrarPaso(5);
     }
 });
+
+function cargarObrasSocialesSelect() {
+    
+    const obras = obtenerObrasSociales();
+    
+    selectPacienteObraSocial.innerHTML = '<option value="" disabled selected>Seleccione una</option>';
+
+    obras.forEach(obra => {
+        const option = document.createElement('option');
+        option.value = obra.id;
+        option.textContent = `${obra.nombre} (${obra.porcentaje}% cobertura)`;
+        selectPacienteObraSocial.appendChild(option);
+    });
+}
 
 
 function poblarFormulario(idTurno) {
