@@ -14,7 +14,6 @@ if (especialidadesGuardadas.length === 0) {
     localStorage.setItem("especialidades", JSON.stringify(especialidadesIniciales));
 }
 
-
 function obtenerEspecialidades() {
   return JSON.parse(localStorage.getItem("especialidades")) || [];
 }
