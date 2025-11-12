@@ -1,31 +1,51 @@
+import { 
+    obtenerMedicos, 
+    obtenerTurnos, 
+    guardarTurnos, 
+    obtenerReservas, 
+    guardarReservas,
+    obtenerObrasSociales // 👈 NUEVA IMPORTACIÓN
+} from './localStorage.js';
+
+const tablaBody = document.getElementById('tabla-reservas-body');
+
+document.addEventListener('DOMContentLoaded', () => {
+    listarReservasAdmin();
+});
+
 function listarReservasAdmin() {
     tablaBody.innerHTML = '';
     const reservas = obtenerReservas();
     const turnos = obtenerTurnos();
     const medicos = obtenerMedicos();
-    const obrasSociales = obtenerObrasSociales(); // 🔹 Nuevo: obtenemos las obras sociales
+    const obrasSociales = obtenerObrasSociales(); // 👈 Traemos las obras sociales
 
     if (reservas.length === 0) {
-        tablaBody.innerHTML = '<tr><td colspan="8">No hay ninguna reserva registrada.</td></tr>';
+        tablaBody.innerHTML = '<tr><td colspan="7">No hay ninguna reserva registrada.</td></tr>';
         return;
     }
 
     reservas.forEach(reserva => {
         const turno = turnos.find(t => t.id === reserva.idTurno);
         const medico = turno ? medicos.find(m => m.id === turno.idMedico) : null;
-        const obraSocial = obrasSociales.find(o => o.nombre === reserva.obraSocial);
-
         const nombreMedico = medico ? `${medico.nombre} ${medico.apellido}` : 'Médico no encontrado';
         const fechaTurno = turno ? turno.fechaHora : 'Turno no encontrado';
-        const nombreObraSocial = obraSocial ? obraSocial.nombre : 'Sin obra social';
 
-        // 🔹 Calcular precio base y final
-        let precioBase = medico ? parseFloat(medico.precioConsulta || 0) : 0;
+        // 🧮 --- Cálculo del precio final considerando la obra social ---
+        let precioBase = medico?.precioConsulta || 0; // precio del médico (definido en AltaMedicos)
+        let descuento = 0;
         let precioFinal = precioBase;
 
-        if (obraSocial && obraSocial.porcentaje) {
-            precioFinal = precioBase - (precioBase * (obraSocial.porcentaje / 100));
+        if (reserva.idObraSocial) {
+            const obra = obrasSociales.find(o => o.id === reserva.idObraSocial);
+            if (obra) {
+                descuento = obra.porcentaje || 0;
+                precioFinal = precioBase - (precioBase * descuento / 100);
+            }
         }
+
+        // 💰 Formateamos para mostrarlo en tabla
+        const precioTexto = `$${precioFinal.toFixed(2)} ${descuento > 0 ? `(Descuento ${descuento}%)` : ''}`;
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -34,8 +54,7 @@ function listarReservasAdmin() {
             <td>${reserva.documentoPaciente}</td>
             <td>${nombreMedico}</td>
             <td>${fechaTurno}</td>
-            <td>${nombreObraSocial}</td>
-            <td>$${precioFinal.toFixed(2)}</td>
+            <td>${precioTexto}</td> <!-- NUEVA COLUMNA -->
             <td>
                 <button class="btn btn-sm btn-warning" onclick="reagendarReserva(${reserva.id}, ${reserva.idTurno})">
                     Reagendar
@@ -49,6 +68,7 @@ function listarReservasAdmin() {
     });
 }
 
+// --- FUNCIONES DE REAGENDAR Y CANCELAR SE MANTIENEN IGUALES ---
 window.reagendarReserva = function(idReserva, idTurnoViejo) {
     const idTurnoNuevoInput = prompt(
         `Vas a mover la reserva ID: ${idReserva}.\n\n` +
@@ -73,12 +93,11 @@ window.reagendarReserva = function(idReserva, idTurnoViejo) {
     let todasLasReservas = obtenerReservas();
 
     const indexTurnoNuevo = todosLosTurnos.findIndex(t => t.id === idTurnoNuevo);
-
     if (indexTurnoNuevo === -1) {
         alert(`Error: El turno con ID: ${idTurnoNuevo} no existe.`);
         return;
     }
-    if (todosLosTurnos[indexTurnoNuevo].disponible === false) {
+    if (!todosLosTurnos[indexTurnoNuevo].disponible) {
         alert(`Error: El turno con ID: ${idTurnoNuevo} ya está reservado.`);
         return;
     }
@@ -100,7 +119,7 @@ window.reagendarReserva = function(idReserva, idTurnoViejo) {
 
     alert(`¡Éxito! La reserva ID: ${idReserva} se movió del Turno ${idTurnoViejo} al Turno ${idTurnoNuevo}.`);
     listarReservasAdmin();
-}
+};
 
 window.cancelarReserva = function(idReserva, idTurno) {
     if (confirm(`¿Estás seguro de que querés CANCELAR esta reserva? (El turno ID: ${idTurno} volverá a estar disponible)`)) {
@@ -119,4 +138,4 @@ window.cancelarReserva = function(idReserva, idTurno) {
         alert('¡Reserva cancelada! El turno ahora está disponible nuevamente.');
         listarReservasAdmin();
     }
-}
+};
