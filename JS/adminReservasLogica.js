@@ -14,38 +14,40 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function listarReservasAdmin() {
-    tablaBody.innerHTML = '';
+    
+    const tablaBody = document.getElementById('tabla-reservas-body');
+    if (!tablaBody) {
+        console.error("¡Error! No se encontró el elemento 'tabla-reservas-body'");
+        return;
+    }
+
+    tablaBody.innerHTML = ''; 
     const reservas = obtenerReservas();
     const turnos = obtenerTurnos();
     const medicos = obtenerMedicos();
-    const obrasSociales = obtenerObrasSociales(); // 👈 Traemos las obras sociales
+    const obrasSociales = obtenerObrasSociales(); 
 
     if (reservas.length === 0) {
-        tablaBody.innerHTML = '<tr><td colspan="7">No hay ninguna reserva registrada.</td></tr>';
+        tablaBody.innerHTML = '<tr><td colspan="8">No hay ninguna reserva registrada.</td></tr>';
         return;
     }
 
     reservas.forEach(reserva => {
         const turno = turnos.find(t => t.id === reserva.idTurno);
         const medico = turno ? medicos.find(m => m.id === turno.idMedico) : null;
+        
+        const obra = obrasSociales.find(o => o.id == reserva.idObraSocial); 
+
         const nombreMedico = medico ? `${medico.nombre} ${medico.apellido}` : 'Médico no encontrado';
         const fechaTurno = turno ? turno.fechaHora : 'Turno no encontrado';
+        const nombreObraSocial = obra ? obra.nombre : 'Particular';
 
-        // 🧮 --- Cálculo del precio final considerando la obra social ---
-        let precioBase = medico?.precioConsulta || 0; // precio del médico (definido en AltaMedicos)
-        let descuento = 0;
-        let precioFinal = precioBase;
-
-        if (reserva.idObraSocial) {
-            const obra = obrasSociales.find(o => o.id === reserva.idObraSocial);
-            if (obra) {
-                descuento = obra.porcentaje || 0;
-                precioFinal = precioBase - (precioBase * descuento / 100);
-            }
-        }
-
-        // 💰 Formateamos para mostrarlo en tabla
-        const precioTexto = `$${precioFinal.toFixed(2)} ${descuento > 0 ? `(Descuento ${descuento}%)` : ''}`;
+        let precioBase = medico?.valorConsulta || 0; 
+        
+        let descuento = obra?.porcentaje || 0;
+        let precioFinal = precioBase - (precioBase * descuento / 100);
+        
+        const precioTexto = `$${precioFinal.toFixed(0)} ${descuento > 0 ? `(${descuento}%)` : ''}`;
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -54,7 +56,8 @@ function listarReservasAdmin() {
             <td>${reserva.documentoPaciente}</td>
             <td>${nombreMedico}</td>
             <td>${fechaTurno}</td>
-            <td>${precioTexto}</td> <!-- NUEVA COLUMNA -->
+            <td>${nombreObraSocial}</td>
+            <td>${precioTexto}</td>
             <td>
                 <button class="btn btn-sm btn-warning" onclick="reagendarReserva(${reserva.id}, ${reserva.idTurno})">
                     Reagendar
@@ -68,7 +71,6 @@ function listarReservasAdmin() {
     });
 }
 
-// --- FUNCIONES DE REAGENDAR Y CANCELAR SE MANTIENEN IGUALES ---
 window.reagendarReserva = function(idReserva, idTurnoViejo) {
     const idTurnoNuevoInput = prompt(
         `Vas a mover la reserva ID: ${idReserva}.\n\n` +
