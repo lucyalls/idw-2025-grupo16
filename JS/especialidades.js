@@ -3,6 +3,18 @@ export const especialidades = [
   { id: 2, nombre: "Pediatría" },
 ];
 
+const especialidadesGuardadas = JSON.parse(localStorage.getItem("especialidades")) || [];
+
+if (especialidadesGuardadas.length === 0) {
+    const especialidadesIniciales = [
+        { id: 1, nombre: "Cardiología", descripcion: "Tratamiento de enfermedades del corazón y vasos sanguíneos." },
+        { id: 2, nombre: "Pediatría", descripcion: "Atención médica de bebés, niños y adolescentes." },
+        { id: 3, nombre: "Dermatología", descripcion: "Diagnóstico y tratamiento de enfermedades de la piel." }
+    ];
+    localStorage.setItem("especialidades", JSON.stringify(especialidadesIniciales));
+}
+
+
 function obtenerEspecialidades() {
   return JSON.parse(localStorage.getItem("especialidades")) || [];
 }
