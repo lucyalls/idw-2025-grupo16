@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -42,7 +43,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <button id="salir" class="btn btn-danger btn-sm">Cerrar Sesión</a>
+                            <button id="salir" class="btn btn-danger btn-sm">Cerrar Sesión</button>
                         </li>
                     </ul>
                 </div>
@@ -50,28 +51,32 @@
         </nav>
     </header>
 
-
-
     <main class="container py-5 flex-grow-1">
         <a href="admin.html" class="btn-principal btn-lg mb-6">
             ← Volver al Panel de Administración
         </a>
+
         <h1 class="texto-centro mt-5">Panel de Administración de Reservas</h1>
-        <p class="mb-5">Acá podés ver todos los turnos reservados por pacientes y cancelarlos si es necesario.</p>
+        <p class="mb-5">Acá podés ver todos los turnos reservados por pacientes, ver su obra social y precio final, y
+            cancelarlos o reagendarlos si es necesario.</p>
 
         <div class="table-responsive">
-            <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID Reserva</th>
-                            <th>Paciente</th>
-                            <th>DNI</th>
-                            <th>Médico</th>
-                            <th>Turno (Fecha y Hora)</th>
-                            <th>Acciones</th> </tr>
-                    </thead>
+            <table class="table table-striped text-center align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Reserva</th>
+                        <th>Paciente</th>
+                        <th>DNI</th>
+                        <th>Médico</th>
+                        <th>Turno (Fecha y Hora)</th>
+                        <th>Obra Social</th> <!-- ✅ NUEVA COLUMNA -->
+                        <th>Precio Final</th> <!-- ✅ NUEVA COLUMNA -->
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
                 <tbody id="tabla-reservas-body">
-                    </tbody>
+                    <!-- Se completa dinámicamente desde adminReservas.js -->
+                </tbody>
             </table>
         </div>
     </main>
@@ -116,8 +121,8 @@
         </div>
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="JS/adminReservasLogica.js" type="module"></script>
-<script type="module" src="JS/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/adminReservas.js" type="module"></script>
+    <script type="module" src="JS/admin.js"></script>
 </body>
 </html>
