@@ -39,7 +39,7 @@ function mostrarObrasSociales() {
             <td>${obra.plan || '-'}</td>
             <td>${obra.telefono || '-'}</td>
             <td>${obra.direccion || '-'}</td>
-            <td>${obra.porcentaje || 0}%</td>
+            <td>${obra.cobertura || 0}%</td>
             <td>
                 <button class="btn btn-warning btn-sm" onclick="window.editarObraSocial(${obra.id})">Editar</button>
                 <button class="btn btn-danger btn-sm" onclick="window.eliminarObraSocial(${obra.id})">Eliminar</button>

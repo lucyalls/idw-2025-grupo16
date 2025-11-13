@@ -1,4 +1,5 @@
 import { especialidades } from "./especialidades.js";
+import { medicos } from "./medicos.js"; 
 import {
     obtenerMedicos,
     obtenerTurnos,
@@ -33,14 +34,9 @@ const divResultadoReservas = document.getElementById('resultado-reservas');
 const inputPacienteNacimiento = document.getElementById('paciente-nacimiento');
 
 function mostrarPaso(numeroPaso) {
-    document.querySelectorAll('.paso').forEach(paso => {
-        paso.classList.add('d-none');
-    });
-    
+    document.querySelectorAll('.paso').forEach(paso => paso.classList.add('d-none'));
     const panelAMostrar = document.getElementById(`paso-${numeroPaso}`);
-    if (panelAMostrar) {
-        panelAMostrar.classList.remove('d-none');
-    }
+    if (panelAMostrar) panelAMostrar.classList.remove('d-none');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -79,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         procesarReserva();
     });
-
 });
 
 function poblarEspecialidades() {
@@ -106,20 +101,20 @@ divListaEspecialidades.addEventListener('click', (event) => {
     }
 });
 
-
 function poblarProfesionales(idEspecialidad) {
     divListaProfesionales.innerHTML = ''; 
-    const medicos = obtenerMedicos();
+    const medicosGuardados = obtenerMedicos();
+    const listaMedicos = medicosGuardados && medicosGuardados.length ? medicosGuardados : medicos;
     const especialidades = obtenerEspecialidades(); 
     
     let medicosFiltrados = [];
     
     if (idEspecialidad) {
-        medicosFiltrados = medicos.filter(m => m.especialidad === idEspecialidad);
+        medicosFiltrados = listaMedicos.filter(m => m.especialidad === idEspecialidad);
         const esp = especialidades.find(e => e.id === idEspecialidad);
         tituloPaso3.textContent = `Paso 3: Elegí un Profesional (${esp.nombre})`;
     } else {
-        medicosFiltrados = medicos;
+        medicosFiltrados = listaMedicos;
         tituloPaso3.textContent = `Paso 3: Elegí un Profesional (Todos)`;
     }
 
@@ -139,21 +134,17 @@ function poblarProfesionales(idEspecialidad) {
 
         divCol.innerHTML = `
             <div class="card h-100 text-center shadow-sm"> 
-                
                 <img src="${medico.foto || placeholderImg}" 
                      class="card-img-top" 
                      style="height: 180px; object-fit: cover;" 
                      alt="Foto de ${medico.nombre} ${medico.apellido}">
                      
                 <div class="card-body d-flex flex-column p-2">
-                    
                     <h5 class="card-title fs-6">${medico.nombre} ${medico.apellido}</h5>
                     <h6 class="card-subtitle mb-2 text-muted small">${especialidadNombre}</h6>
-                    
                     <p class="card-text small text-muted flex-grow-1" style="font-size: 0.8em;">
                         ${medico.descripcion || 'Sin descripción.'}
                     </p> 
-                    
                     <button type="button" 
                             class="btn-principal btn-sm mt-auto btn-ver-turnos" 
                             data-id="${medico.id}"> Ver Turnos
@@ -175,11 +166,11 @@ divListaProfesionales.addEventListener('click', (event) => {
     }
 });
 
-
 function poblarTurnos(idMedico) {
     divListaTurnos.innerHTML = '';
     const turnos = obtenerTurnos();
-    const medico = obtenerMedicos().find(m => m.id === idMedico);
+    const listaMedicos = obtenerMedicos() || medicos; 
+    const medico = listaMedicos.find(m => m.id === idMedico);
     tituloPaso4.textContent = `Paso 4: Elegí un Turno (Dr. ${medico.apellido})`;
 
     const turnosDisponibles = turnos.filter(t => t.idMedico === idMedico && t.disponible === true);
@@ -210,11 +201,8 @@ divListaTurnos.addEventListener('click', (event) => {
 });
 
 function cargarObrasSocialesSelect() {
-    
     const obras = obtenerObrasSociales();
-    
     selectPacienteObraSocial.innerHTML = '<option value="" disabled selected>Seleccione una</option>';
-
     obras.forEach(obra => {
         const option = document.createElement('option');
         option.value = obra.id;
@@ -223,13 +211,12 @@ function cargarObrasSocialesSelect() {
     });
 }
 
-
 function poblarFormulario(idTurno) {
-    const medicos = obtenerMedicos();
+    const listaMedicos = obtenerMedicos() || medicos;
     const turnos = obtenerTurnos();
     
     const turno = turnos.find(t => t.id === idTurno);
-    const medico = medicos.find(m => m.id === turno.idMedico);
+    const medico = listaMedicos.find(m => m.id === turno.idMedico);
 
     infoTurnoSeleccionado.innerHTML = `
         Estás reservando con: <strong>${medico.nombre} ${medico.apellido}</strong><br>
@@ -253,16 +240,13 @@ function procesarReserva() {
 
     let todosLosTurnos = obtenerTurnos();
     let todasLasReservas = obtenerReservas();
-    let medicos = obtenerMedicos();
+    let listaMedicos = obtenerMedicos() || medicos;
 
-    let maxId = 0;
-    if (todasLasReservas.length > 0) {
-        maxId = Math.max(...todasLasReservas.map(r => r.id));
-    }
+    let maxId = todasLasReservas.length > 0 ? Math.max(...todasLasReservas.map(r => r.id)) : 0;
     const nuevoIdReserva = maxId + 1;
 
     const turnoSeleccionado = todosLosTurnos.find(t => t.id === idTurno);
-    const medicoDelTurno = medicos.find(m => m.id === turnoSeleccionado.idMedico);
+    const medicoDelTurno = listaMedicos.find(m => m.id === turnoSeleccionado.idMedico);
 
     const nuevaReserva = {
         id: nuevoIdReserva,
@@ -291,9 +275,8 @@ function procesarReserva() {
 
 function mostrarMisReservas(dni) {
     divResultadoReservas.innerHTML = "";
-    
     const todasLasReservas = obtenerReservas();
-    const medicos = obtenerMedicos();
+    const listaMedicos = obtenerMedicos() || medicos;
     const turnos = obtenerTurnos();
 
     const misReservas = todasLasReservas.filter(r => r.documentoPaciente === dni);
@@ -303,12 +286,11 @@ function mostrarMisReservas(dni) {
         return;
     }
 
-    let html = '<h4 class="mb-3">Reservas Encontradas:</h4>';
-    html += '<div class="list-group">';
+    let html = '<h4 class="mb-3">Reservas Encontradas:</h4><div class="list-group">';
 
     misReservas.forEach(reserva => {
         const turno = turnos.find(t => t.id === reserva.idTurno);
-        const medico = turno ? medicos.find(m => m.id === turno.idMedico) : null;
+        const medico = turno ? listaMedicos.find(m => m.id === turno.idMedico) : null;
         
         const nombreMedico = medico ? `${medico.nombre} ${medico.apellido}` : 'Médico no encontrado';
         const fechaTurno = turno ? turno.fechaHora : 'Turno no encontrado';

@@ -16,7 +16,7 @@ export const medicos = [
     apellido: "Rodríguez",
     nombre: "Carlos",
     especialidad: 3,
-    descripcion: "Especialista en Pediatría.",
+    descripcion: "Especialista en Ginecología.",
     obrasSociales: [101, 103, 104],
     foto: "./img/doctor2.jpg",
     valorConsulta: 4500
@@ -27,7 +27,7 @@ export const medicos = [
     apellido: "Gómez",
     nombre: "María",
     especialidad: 2,
-    descripcion: "Especialista en Neurología.",
+    descripcion: "Especialista en Pediatría.",
     obrasSociales: [102, 104],
     foto: "./img/doctor3.jpg",
     valorConsulta: 5500
@@ -38,7 +38,7 @@ export const medicos = [
     apellido: "Alberto",
     nombre: "Juan",
     especialidad: 4,
-    descripcion: "Especialista en Oncología.",
+    descripcion: "Especialista en Traumatología.",
     obrasSociales: [101, 103, 104],
     foto: "../img/doctor4.jpg",
     valorConsulta: 6000
@@ -49,7 +49,7 @@ export const medicos = [
     apellido: "Benavides",
     nombre: "Geronimo",
     especialidad: 5,
-    descripcion: "Especialista en Urología.",
+    descripcion: "Especialista en Dermatología.",
     obrasSociales: [101, 104],
     foto: "../img/doctor5.jpg",
     valorConsulta: 5200
@@ -60,7 +60,7 @@ export const medicos = [
     apellido: "Alejandro",
     nombre: "Fernández",
     especialidad: 6,
-    descripcion: "Especialista en Ginecología.",
+    descripcion: "Especialista en Neurología.",
     obrasSociales: [101, 102, 103],
     foto: "../img/doctor6.jpg",
     valorConsulta: 5000
@@ -82,7 +82,7 @@ export const medicos = [
     apellido: "Torres",
     nombre: "Carolina",
     especialidad: 3,
-    descripcion: "Especialista en Pediatría.",
+    descripcion: "Especialista en Ginecología.",
     obrasSociales: [101, 103],
     foto: "../img/doctor8.jpg",
     valorConsulta: 4700

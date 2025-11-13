@@ -13,7 +13,6 @@
 <script>
 const token = sessionStorage.getItem("token");
 
-//Si hay sesión-->agregar botón Cerrar Sesión
 if(token){
     const navBar = document.querySelector("#navbarNav ul:last-child");
     const li = document.createElement("li");
@@ -22,7 +21,6 @@ if(token){
     navBar.appendChild(li);
 }
 
-//Función cerrar sesión
 document.addEventListener("click", (e) => {
     if(e.target.id === "logoutBtn"){
         sessionStorage.clear();

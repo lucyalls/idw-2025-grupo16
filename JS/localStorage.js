@@ -1,9 +1,8 @@
-
 import { medicos } from './medicos.js';
 import { turnos } from './turnos.js';
 import { reservas } from './reservas.js';
 import { especialidades } from './especialidades.js';
-import { obrasSociales } from './obrasSociales.js';
+import { obrasSociales } from './ObrasSociales.js';
 
 const KEY_MEDICOS = 'listaMedicos';
 const KEY_TURNOS = 'listaTurnos';
