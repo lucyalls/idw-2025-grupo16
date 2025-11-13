@@ -54,12 +54,23 @@ export function guardarEspecialidades(especialidadesAGuardar) {
     localStorage.setItem(KEY_ESPECIALIDADES, JSON.stringify(especialidadesAGuardar));
 }
 export function obtenerEspecialidades() {
+    const KEY_ESPECIALIDADES = "especialidades";
     const especialidadesGuardadas = localStorage.getItem(KEY_ESPECIALIDADES);
+
     if (especialidadesGuardadas) {
         return JSON.parse(especialidadesGuardadas);
     } else {
-        guardarEspecialidades(especialidades);
-        return especialidades;
+        const especialidadesIniciales = [
+            { id: 1, nombre: "Cardiología", descripcion: "Tratamiento de enfermedades del corazón y sistema circulatorio." },
+            { id: 2, nombre: "Pediatría", descripcion: "Atención médica de bebés, niños y adolescentes." },
+            { id: 3, nombre: "Ginecología", descripcion: "Cuidado de la salud femenina y control del sistema reproductor." },
+            { id: 4, nombre: "Traumatología", descripcion: "Diagnóstico y tratamiento de lesiones óseas y musculares." },
+            { id: 5, nombre: "Dermatología", descripcion: "Diagnóstico y tratamiento de enfermedades de la piel." },
+            { id: 6, nombre: "Neurología", descripcion: "Estudio y tratamiento de trastornos del sistema nervioso." },
+            { id: 7, nombre: "Oftalmología", descripcion: "Atención médica y quirúrgica de los ojos." },
+        ];
+        localStorage.setItem(KEY_ESPECIALIDADES, JSON.stringify(especialidadesIniciales));
+        return especialidadesIniciales;
     }
 }
 
