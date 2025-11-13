@@ -1,3 +1,8 @@
+export const especialidades = [
+  { id: 1, nombre: "Cardiología" },
+  { id: 2, nombre: "Pediatría" },
+];
+
 const especialidadesGuardadas = JSON.parse(localStorage.getItem("especialidades")) || [];
 
 if (especialidadesGuardadas.length === 0) {
